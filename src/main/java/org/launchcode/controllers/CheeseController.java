@@ -93,10 +93,10 @@ public class CheeseController {
     @RequestMapping(value = "edit/{cheeseIdV}", method = RequestMethod.POST)
     //public String processEditForm(int cheeseId, String name, String description, String type){
     public String processEditForm(@ModelAttribute  @Valid Cheese editCheese, Errors errors, @RequestParam int categoryId, Model model){
-        System.out.println("Chezcntrlr edit-process id " + editCheese.getId());
+        System.out.println("Chezcntrlr edit-process id " + editCheese.getId() + " N- " +editCheese.getName() + " C- " +editCheese.getCategory() +" D- " + editCheese.getDescription());
         editCheese.setCategory(categoryDao.findOne(categoryId));
-        editCheese.setId(editCheese.getId());
-//        cheeseDao.save(editCheese);
+        //editCheese.setId(editCheese.getId());  //setup new setter for thsi. may need to be deleted.
+        cheeseDao.save(editCheese);
         System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId());
 
         return "redirect:/cheese"; //place holder

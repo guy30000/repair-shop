@@ -15,6 +15,8 @@ import java.util.List;
 @Entity
 public class Cheese {
 
+
+
     @Id
     @GeneratedValue
     private int id;
@@ -46,6 +48,10 @@ public class Cheese {
 
     public int getId() {
         return id;
+    }
+    ////added this setter for Edit function
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

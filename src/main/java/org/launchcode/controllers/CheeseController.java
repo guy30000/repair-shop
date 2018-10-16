@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -81,4 +78,27 @@ public class CheeseController {
         return "redirect:";
     }
 
+
+    //Bonus mission, edit cheese
+    @RequestMapping(value = "edit/{cheeseIdV}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseIdV){
+
+        model.addAttribute("title", "Edit Cheese: " + cheeseDao.findOne(cheeseIdV).getName());
+        model.addAttribute("categories", categoryDao.findAll());
+        model.addAttribute("cheese", cheeseDao.findOne(cheeseIdV));
+        Cheese editingCheese = cheeseDao.findOne(cheeseIdV);
+        System.out.println("Chezcntrlr edit/id " + editingCheese.getName() + " - " + editingCheese.getId());
+        return "cheese/edit";
+    }
+    @RequestMapping(value = "edit/{cheeseIdV}", method = RequestMethod.POST)
+    //public String processEditForm(int cheeseId, String name, String description, String type){
+    public String processEditForm(@ModelAttribute  @Valid Cheese editCheese, Errors errors, @RequestParam int categoryId, Model model){
+        System.out.println("Chezcntrlr edit-process id " + editCheese.getId());
+        editCheese.setCategory(categoryDao.findOne(categoryId));
+        editCheese.setId(editCheese.getId());
+//        cheeseDao.save(editCheese);
+        System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId());
+
+        return "redirect:/cheese"; //place holder
+    }
 }

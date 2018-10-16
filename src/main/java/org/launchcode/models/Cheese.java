@@ -49,10 +49,7 @@ public class Cheese {
     public int getId() {
         return id;
     }
-    ////added this setter for Edit function
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public String getName() {
         return name;

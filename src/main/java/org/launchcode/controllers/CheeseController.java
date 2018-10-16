@@ -101,7 +101,6 @@ public class CheeseController {
 
 
         editCheese.setCategory(categoryDao.findOne(categoryId));
-        //editCheese.setId(editCheese.getId());  //setup new setter for thsi. may need to be deleted.
         cheeseDao.save(editCheese);
         System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId());
 

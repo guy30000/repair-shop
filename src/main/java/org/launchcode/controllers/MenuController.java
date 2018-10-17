@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -37,8 +34,6 @@ public class MenuController {
         return "Menu/index";
     }
 
-
-
     @RequestMapping (value = "add", method = RequestMethod.GET) //5:30 p2
     public String add(Model model) {
         System.out.println("MenuController -- DisplayAddCategory ");
@@ -47,8 +42,6 @@ public class MenuController {
 
         return "menu/add";
     }
-
-
 
         @RequestMapping (value = "add", method = RequestMethod.POST) //6:55 p2
         public String add(Model model, @ModelAttribute @Valid Menu menu, Errors errors){
@@ -87,14 +80,12 @@ public class MenuController {
 
         model.addAttribute("title", "Add Cheese to " + menuDao.findOne(id).getName() + " Menu");
         model.addAttribute("form", form);
-
         return "menu/add-item";
 
     }
 
     @RequestMapping (value = "add-item", method = RequestMethod.POST) //17:00
     public String addItem(Model model, @ModelAttribute @Valid AddMenuItemForm form, Errors errors) {
-
         if (errors.hasErrors()) {
             model.addAttribute("form", form);
             return "menu/add-item";
@@ -105,11 +96,47 @@ public class MenuController {
     menuDao.save(theMenu);
         System.out.println("MenuCont -- adding " +theCheese.getName()+ " to mnu " + theMenu.getName());
 
-
-
-
-
     return "redirect:/menu/view/" + theMenu.getId();
     }
+    ///This is my own project
+    //Bonus mission, edit cheese
+    @RequestMapping(value = "edit/{menuId}", method = RequestMethod.GET)
+    public String displayEditMenuForm(Model model, @PathVariable int menuId){
+        System.out.println("mnucntrl displayEditMenu1 " + menuDao.findOne(menuId).getName());
+        model.addAttribute("title", "Edit Menu: " + menuDao.findOne(menuId).getName());
+
+        model.addAttribute("menuedit", menuDao.findOne(menuId));
+//        Cheese editingCheese = cheeseDao.findOne(cheeseIdV);
+        return "menu/edit";
+    }
+    @RequestMapping(value = "edit/{menuId}", method = RequestMethod.POST)
+    //public String processEditForm(int cheeseId, String name, String description, String type){
+    public String processEditMenuForm(@PathVariable int menuId, @RequestParam int[] cheeseIds){
+
+        Menu editingMenu = menuDao.findOne(menuId);
+
+        System.out.println("mnucntrl processEditMenu2 "  + menuDao.findOne(menuId).getName());
+        System.out.println("mnucntrl B "  + editingMenu.getCheeses());
+        //System.out.println("cheese ids " + cheeseDao.findOne(cheeseIds);
+
+        for (int cheeseId : cheeseIds) {
+            System.out.println("remove menu cheese  " + menuDao.findOne(menuId).getCheeses());
+            //System.out.println("mnucntrl B "  + editingMenu.getCheeses(cheeseIds));
+            //menuDao.delete(cheeseId);
+        }
+
+        //        if (errors.hasErrors()) {
+//            model.addAttribute("title", "Add Cheese");
+//            model.addAttribute("categories", categoryDao.findAll()); //14:00
+//            return "cheese/edit";
+//        }
+//        editCheese.setCategory(categoryDao.findOne(categoryId));
+//        cheeseDao.save(editCheese);
+
+        return "redirect:/menu"; //place holder
+    }
+
+
+
 
 }

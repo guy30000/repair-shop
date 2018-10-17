@@ -72,6 +72,7 @@ public class CheeseController {
     public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
 
         for (int cheeseId : cheeseIds) {
+            System.out.println("remove cheese  " + cheeseIds);
             cheeseDao.delete(cheeseId);
         }
 
@@ -106,4 +107,21 @@ public class CheeseController {
 
         return "redirect:/cheese"; //place holder
     }
+////This is my own project
+//    @RequestMapping(value = "menu/remove", method = RequestMethod.GET)
+//    public String displayMenuRemoveCheeseForm(Model model) {
+//        model.addAttribute("cheeses", cheeseDao.findAll());
+//        model.addAttribute("title", "Remove Cheese");
+//        return "cheese/remove";
+//    }
+//
+//    @RequestMapping(value = "menu/remove", method = RequestMethod.POST)
+//    public String processMenuRemoveCheeseForm(@RequestParam int[] cheeseIds) {
+//
+//        for (int cheeseId : cheeseIds) {
+//            cheeseDao.delete(cheeseId);
+//        }
+//
+//        return "redirect:";
+//    }
 }

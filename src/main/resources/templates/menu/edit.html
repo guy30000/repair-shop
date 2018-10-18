@@ -7,19 +7,19 @@
 
         <nav th:replace="fragments :: navigation"></nav>
 
-        <form method="post">
+        <p th:unless="${menuedit.cheeses} and ${menuedit.cheeses.size()}">No Cheese in this Menu</p>
 
+        <form method="post">
             <div th:each="cheese : ${menuedit.cheeses}" class="checkbox">
                 <input type="checkbox" name="cheeseIds" th:value="${cheese.id}" th:id="${cheese.id}"/>
                 <label th:for="${cheese.id}" th:text="${cheese.name}"></label>
                 <br />
             </div>
-            <p th:unless="${menuedit.cheeses} and ${menuedit.cheeses.size()}">No Cheese in this Menu</p>
-
-
-
             <input type="submit" value="Remove Cheese from this Menu" />
-            <input type="button"  align="right" value="DELETE MENU" />
+        </form>
+
+        <form method="post">
+            <input type="submit"  align="right" value="DELETE MENU" name="deletemenu"  />
         </form>
 
     </body>

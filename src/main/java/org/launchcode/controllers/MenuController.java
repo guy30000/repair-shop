@@ -114,12 +114,10 @@ public class MenuController {
     public String processEditMenuForm(@PathVariable int menuId, @RequestParam int[] cheeseIds){
         Menu editingMenu = menuDao.findOne(menuId);
         System.out.println("mnucntrl processEditMenu2 "  + menuDao.findOne(menuId).getName());
-
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Edit Menu: " + menuDao.findOne(menuId).getName());
-//            model.addAttribute("menuedit", menuDao.findOne(menuId));
-//            return "cheese/edit";
-//        }
+        if (cheeseIds == null) {
+            System.out.println("mnucntrl nothing to remove  " );
+            return "redirect:/menu";
+        }
 
         for (int cheeseId : cheeseIds) {
             Cheese removingMenuCheese = cheeseDao.findOne(cheeseId);
@@ -128,9 +126,15 @@ public class MenuController {
         }
         menuDao.save(editingMenu);
 
-        return "redirect:/menu"; //place holder
-    }
+//        if (deletemenu) {
+//            System.out.println("remove DELET menu  " );
+//            return "redirect:/menu";
+//        }
 
+
+
+        return "redirect:/menu";
+    }
 
 
 

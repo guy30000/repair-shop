@@ -111,27 +111,22 @@ public class MenuController {
     }
     @RequestMapping(value = "edit/{menuId}", method = RequestMethod.POST)
     //public String processEditForm(int cheeseId, String name, String description, String type){
-    public String processEditMenuForm(@PathVariable int menuId, @RequestParam int[] cheeseIds){
-
+    public String processEditMenuForm(@PathVariable int menuId, @RequestParam int[] cheeseIds, Errors errors, Model model){
         Menu editingMenu = menuDao.findOne(menuId);
-
         System.out.println("mnucntrl processEditMenu2 "  + menuDao.findOne(menuId).getName());
-        System.out.println("mnucntrl B "  + editingMenu.getCheeses());
-        //System.out.println("cheese ids " + cheeseDao.findOne(cheeseIds);
 
-        for (int cheeseId : cheeseIds) {
-            System.out.println("remove menu cheese  " + menuDao.findOne(menuId).getCheeses());
-            //System.out.println("mnucntrl B "  + editingMenu.getCheeses(cheeseIds));
-            //menuDao.delete(cheeseId);
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Menu: " + menuDao.findOne(menuId).getName());
+            model.addAttribute("menuedit", menuDao.findOne(menuId));
+            return "cheese/edit";
         }
 
-        //        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Add Cheese");
-//            model.addAttribute("categories", categoryDao.findAll()); //14:00
-//            return "cheese/edit";
-//        }
-//        editCheese.setCategory(categoryDao.findOne(categoryId));
-//        cheeseDao.save(editCheese);
+        for (int cheeseId : cheeseIds) {
+            Cheese removingMenuCheese = cheeseDao.findOne(cheeseId);
+            editingMenu.getCheeses().remove(removingMenuCheese);
+            System.out.println("remove menu cheese  " + cheeseDao.findOne(cheeseId).getName());
+        }
+        menuDao.save(editingMenu);
 
         return "redirect:/menu"; //place holder
     }

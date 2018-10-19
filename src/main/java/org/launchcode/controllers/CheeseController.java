@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
 import javax.validation.Valid;
 
 /**
@@ -102,10 +103,11 @@ public class CheeseController {
             return "cheese/edit";
         }
 
-        System.out.println("Chezcntrlr edit-presave " + editCheese.getName() + " - " + editCheese.getId());
+        //editCheese.setId(editCheese.getId());
+        System.out.println("Chezcntrlr edit-presave " + editCheese.getName() + " - " + editCheese.getId() + "         -  " + editCheese.getDescription() + " - " + editCheese.getCategory());
         editCheese.setCategory(categoryDao.findOne(categoryId));
         cheeseDao.save(editCheese);
-        System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId());
+        System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId() + "         -  " + editCheese.getDescription() + " - " + editCheese.getCategory());
 
         return "redirect:/cheese"; //place holder
     }

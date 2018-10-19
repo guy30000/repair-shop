@@ -16,7 +16,6 @@ import java.util.List;
 public class Cheese {
 
 
-
     @Id
     @GeneratedValue
     private int id;
@@ -49,7 +48,11 @@ public class Cheese {
     public int getId() {
         return id;
     }
-
+///added this in the edit part. Thought I had it working without but something happened
+    //It appears the setter is needed when editing the cheese
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

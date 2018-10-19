@@ -111,20 +111,21 @@ public class MenuController {
     }
     @RequestMapping(value = "edit/{menuId}", method = RequestMethod.POST)
     //public String processEditForm(int cheeseId, String name, String description, String type){
-    public String processEditMenuForm(@PathVariable int menuId, @RequestParam int[] cheeseIds){
+    public String processEditMenuForm(@PathVariable int menuId, @RequestParam (required=false) int[] cheeseIds){
         Menu editingMenu = menuDao.findOne(menuId);
         System.out.println("mnucntrl processEditMenu2 "  + menuDao.findOne(menuId).getName());
-        if (cheeseIds == null) {
-            System.out.println("mnucntrl nothing to remove  " );
+
+        if (cheeseIds != null) {
+            for (int cheeseId : cheeseIds) {
+                Cheese removingMenuCheese = cheeseDao.findOne(cheeseId);
+                editingMenu.getCheeses().remove(removingMenuCheese);
+                System.out.println("remove menu cheese  " + cheeseDao.findOne(cheeseId).getName());
+            }
+            menuDao.save(editingMenu);
             return "redirect:/menu";
         }
 
-        for (int cheeseId : cheeseIds) {
-            Cheese removingMenuCheese = cheeseDao.findOne(cheeseId);
-            editingMenu.getCheeses().remove(removingMenuCheese);
-            System.out.println("remove menu cheese  " + cheeseDao.findOne(cheeseId).getName());
-        }
-        menuDao.save(editingMenu);
+
 
 //        if (deletemenu) {
 //            System.out.println("remove DELET menu  " );

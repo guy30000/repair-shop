@@ -69,12 +69,14 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
-
+    public String processRemoveCheeseForm(@RequestParam (required=false) int[] cheeseIds) {
+        //added the (required=false) as part of the if update mentioned below
+//updated on my own projuect added iff statement so hitting remove with no selection wouldnt break it
+        if (cheeseIds != null) {
         for (int cheeseId : cheeseIds) {
             System.out.println("remove cheese  " + cheeseIds);
             cheeseDao.delete(cheeseId);
-        }
+        }}
 
         return "redirect:";
     }

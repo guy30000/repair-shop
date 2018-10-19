@@ -110,13 +110,14 @@ public class MenuController {
         return "menu/edit";
     }
     @RequestMapping(value = "edit/{menuId}", method = RequestMethod.POST)
-    public String processEditMenuForm(@PathVariable int menuId, @RequestParam (required=false) int[] cheeseIds, @RequestParam (required=false) String deletemenu){
+    public String processEditMenuForm(Model model, @PathVariable int menuId, @RequestParam (required=false) int[] cheeseIds, @RequestParam (required=false) String deletemenu){
         Menu editingMenu = menuDao.findOne(menuId);
         System.out.println("mnucntrl processEditMenu2 "  + menuDao.findOne(menuId).getName());
 
         if (deletemenu != null) { //did a double if statement here because the .equals one would break things for some reason if ahead of the others. So instead I checked for null and then for "DELETE MENU". Keeping the delete menue as to prevent some other random value in the feild from deleting.
             if(deletemenu.equals("DELETE MENU")) {
             System.out.println("remove DELET menu  " + deletemenu + " - " + menuDao.findOne(menuId).getName());
+            model.addAttribute("message", "Edit Menu: " + menuDao.findOne(menuId).getName());
             menuDao.delete(menuId);
             return "redirect:/menu";
         } }

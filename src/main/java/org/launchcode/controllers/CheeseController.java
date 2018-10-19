@@ -70,7 +70,7 @@ public class CheeseController {
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCheeseForm(@RequestParam (required=false) int[] cheeseIds) {
-        //added the (required=false) as part of the if update mentioned below
+        //added the (required=false) as part of the info below
 //updated on my own projuect added iff statement so hitting remove with no selection wouldnt break it
         if (cheeseIds != null) {
         for (int cheeseId : cheeseIds) {
@@ -102,28 +102,12 @@ public class CheeseController {
             return "cheese/edit";
         }
 
-
+        System.out.println("Chezcntrlr edit-presave " + editCheese.getName() + " - " + editCheese.getId());
         editCheese.setCategory(categoryDao.findOne(categoryId));
         cheeseDao.save(editCheese);
         System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId());
 
         return "redirect:/cheese"; //place holder
     }
-////This is my own project
-//    @RequestMapping(value = "menu/remove", method = RequestMethod.GET)
-//    public String displayMenuRemoveCheeseForm(Model model) {
-//        model.addAttribute("cheeses", cheeseDao.findAll());
-//        model.addAttribute("title", "Remove Cheese");
-//        return "cheese/remove";
-//    }
-//
-//    @RequestMapping(value = "menu/remove", method = RequestMethod.POST)
-//    public String processMenuRemoveCheeseForm(@RequestParam int[] cheeseIds) {
-//
-//        for (int cheeseId : cheeseIds) {
-//            cheeseDao.delete(cheeseId);
-//        }
-//
-//        return "redirect:";
-//    }
+
 }

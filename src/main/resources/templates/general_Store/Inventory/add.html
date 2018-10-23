@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="general_Store/fragmentsGS :: head"></head>
+<body class="container">
+
+<!--<h1 th:text="${title}">Default Title</h1>-->
+
+<nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
+<nav th:replace="general_Store/fragmentsGS :: title"></nav>
+
+<form method="post" style="max-width:600px;" th:object="${inventory}">
+    <div class="form-group">
+        <label th:for="name">Name (required)</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" th:field="*{description}" />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="salePrice">Sale Price (required)</label>
+        <input class="form-control" th:field="*{salePrice}" />
+        <span th:errors="*{salePrice}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="sku">SKU</label>
+        <input class="form-control" th:field="*{sku}" />
+        <span th:errors="*{sku}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="purchaseCost">Purchase Cost (required)</label>
+        <input class="form-control" th:field="*{purchaseCost}" />
+        <span th:errors="*{purchaseCost}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="vendor">Vendor</label>
+        <input class="form-control" th:field="*{vendor}" />
+        <span th:errors="*{vendor}" class="error"></span>
+    </div>
+
+
+    <input type="submit" value="Create New Item" />
+</form>
+
+</body>
+</html>

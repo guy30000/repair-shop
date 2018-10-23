@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="general_Store/fragmentsGS :: head"></head>
+<body class="container">
+
+<!--<h1 th:text="${title}">Default Title</h1>-->
+
+<nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
+<nav th:replace="general_Store/fragmentsGS :: title"></nav>
+
+<ul>
+
+    <li><a href="/general_Store/Inventory/add">Add new item to inventory</a></li>
+
+</ul>
+
+</body>
+</html>

@@ -16,16 +16,19 @@ public class Inventory {
 
     private String description;
 
-    private int sku;
+    @Digits(integer=30, fraction=0)
+    private double sku;
 
     private String vendor;
 
     @NotNull
     @DecimalMin("0.01")
+    @Digits(integer=8, fraction=2)
     private double purchaseCost;
 
     @NotNull
     @DecimalMin("0.01")
+    @Digits(integer=8, fraction=2)
     private double salePrice;
 
     @Min(0)
@@ -73,7 +76,7 @@ public class Inventory {
         this.description = description;
     }
 
-    public int getSku() {
+    public double getSku() {
         return sku;
     }
 

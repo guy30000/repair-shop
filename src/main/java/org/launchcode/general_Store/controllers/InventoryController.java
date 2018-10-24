@@ -47,10 +47,10 @@ public class InventoryController {
         return "general_Store/Inventory/index";
     }
 
-    @RequestMapping(value = "receive", method = RequestMethod.POST)
+    @RequestMapping(value = "receive", method = RequestMethod.GET)
     public String displayReceiveInv( Model model) {
-
-
+        model.addAttribute("title", "");
+        model.addAttribute("inventory", inventoryDao.findAll());
         return "general_Store/Inventory/receive";
     }
 

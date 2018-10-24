@@ -28,7 +28,7 @@ public class Inventory {
     @DecimalMin("0.01")
     private double salePrice;
 
-    @Min(1)
+    @Min(0)
     private int initialStock;
 
 

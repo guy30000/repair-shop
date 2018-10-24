@@ -1,19 +1,24 @@
 package org.launchcode.general_Store.controllers;
 
 import org.launchcode.general_Store.models.Inventory;
+import org.launchcode.general_Store.models.data.InventoryDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "general_Store/Inventory")
 public class InventoryController {
+
+    @Autowired
+    private InventoryDao inventoryDao;
+
 
     @RequestMapping(value = "")
     public String index(Model model) {
@@ -36,19 +41,17 @@ public class InventoryController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create inventory item");
             model.addAttribute("inventory", newInvItem);
-            System.out.println("InventoryController-Errors " );
             return "general_Store/Inventory/add";
         }
-
-
-        System.out.println("adding tests d " + newInvItem.getDescription());
-        System.out.println("adding tests sp " + newInvItem.getSalePrice());
-        System.out.println("adding tests s " + newInvItem.getSku());
-        System.out.println("adding tests pc " + newInvItem.getPurchaseCost());
-        System.out.println("adding tests v " + newInvItem.getVendor());
-        System.out.println("adding tests i " + newInvItem.getId());
-        System.out.println("adding tests iS " + newInvItem.getInitialStock());
+        inventoryDao.save(newInvItem);
         return "general_Store/Inventory/index";
+    }
+
+    @RequestMapping(value = "receive", method = RequestMethod.POST)
+    public String displayReceiveInv( Model model) {
+
+
+        return "general_Store/Inventory/receive";
     }
 
 }

@@ -28,8 +28,6 @@ public class Cheese {
     @Size(min=1, message = "Description must not be empty")
     private String description;
 
-
-
     //private CheeseType type;
     @ManyToOne //Many cheeses will be assigned to one cat
     private Category category;

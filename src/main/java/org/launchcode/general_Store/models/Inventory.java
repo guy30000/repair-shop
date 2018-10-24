@@ -1,8 +1,7 @@
 package org.launchcode.general_Store.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class Inventory {
@@ -22,19 +21,26 @@ public class Inventory {
     private String vendor;
 
     @NotNull
+    @DecimalMin("0.01")
     private double purchaseCost;
 
     @NotNull
+    @DecimalMin("0.01")
     private double salePrice;
 
+    @Min(1)
+    private int initialStock;
+
+
     ///
-    public Inventory(String name, String description, int sku, double purchaseCost, double salePrice, String vendor) {
+    public Inventory(String name, String description, int sku, double purchaseCost, double salePrice, String vendor, int initialStock) {
         this.name = name;
         this.description = description;
         this.sku = sku;
         this.purchaseCost = purchaseCost;
         this.salePrice = salePrice;
         this.vendor = vendor;
+        this.initialStock = initialStock;
     }
 
     public Inventory() { }
@@ -97,6 +103,14 @@ public class Inventory {
 
     public void setSalePrice(double salePrice) {
         this.salePrice = salePrice;
+    }
+
+    public int getInitialStock() {
+        return initialStock;
+    }
+
+    public void setInitialStock(int initialStock) {
+        this.initialStock = initialStock;
     }
 
 }

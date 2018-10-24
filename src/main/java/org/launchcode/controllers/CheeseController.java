@@ -47,8 +47,8 @@ public class CheeseController {
         return "cheese/add";
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
+    @RequestMapping(value = "add", method = RequestMethod.POST) //for some reason modelattribute order matters v
+    public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
                                        Errors errors, @RequestParam int categoryId,
                                        Model model) {
 

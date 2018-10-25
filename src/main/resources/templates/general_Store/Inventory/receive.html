@@ -8,23 +8,37 @@
 <nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
 <nav th:replace="general_Store/fragmentsGS :: title"></nav>
 
+<!--<form th:action="@{/search/results}" th:object="${searchForm}">-->
+    <form object="keyword" method="post" >
+    <div class="form-group">
+        <label th:for="keyword">Search by item name, SKU or vendor</label>
+        <input class="form-control" field="keyword" name="keyword"/>
+        <input type="submit" name="search" value="Search Inventory"/>
+    </div>
+    </form>
+
+
+<form object="addInvSubmit" method="post" >
 <table class="table">
     <tr>
+        <!--<th>Select</th>-->
         <th>Name</th>
         <th>SKU</th>
         <th>Vendor</th>
-        <th>Price</th>
-        <th>Stock</th>
+        <th>Current Stock</th>
+        <th>Add</th>
     </tr>
-    <tr th:each="item : ${inventory}">
+    <tr th:each="item : ${inventory}"  >
+        <!--<td><input type="checkbox" name="itemID" th:value="${item.id}" th:id="${item.id}"/></td>-->
         <td th:text="${item.name}"></td>
         <td th:text="${item.sku}"></td>
         <td th:text="${item.vendor}"></td>
-        <td th:text="${item.salePrice}"></td>
         <td th:text="${item.stock}"></td>
-        <!--<td><a th:href="'/cheese/edit/' + ${cheese.id}" th:text="Edit" >></a></td>-->
+        <input type="hidden" name="itemID" th:value="*{item.id}" />
+        <td><input type="number" name="quantity" min="0" max="9999"/></td>
     </tr>
-
 </table>
+    <input type="submit" name="addInv" value="Add Inventory" />
+</form>
 </body>
 </html>

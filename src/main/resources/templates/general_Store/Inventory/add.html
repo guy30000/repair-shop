@@ -15,17 +15,12 @@
         <span th:errors="*{name}" class="error"></span>
     </div>
     <div class="form-group">
-        <label th:for="description">Description</label>
-        <input class="form-control" th:field="*{description}" />
-        <span th:errors="*{description}" class="error"></span>
-    </div>
-    <div class="form-group">
         <label th:for="salePrice">Sale Price (required)</label>
         <input class="form-control" th:field="*{salePrice}" />
         <span th:errors="*{salePrice}" class="error"></span>
     </div>
     <div class="form-group">
-        <label th:for="sku">SKU</label>
+        <label th:for="sku">SKU (required)</label>
         <input class="form-control" th:field="*{sku}" />
         <span th:errors="*{sku}" class="error"></span>
     </div>
@@ -35,14 +30,19 @@
         <span th:errors="*{purchaseCost}" class="error"></span>
     </div>
     <div class="form-group">
+        <label th:for="description">Description</label>
+        <input class="form-control" th:field="*{description}" />
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+    <div class="form-group">
         <label th:for="vendor">Vendor</label>
         <input class="form-control" th:field="*{vendor}" />
         <span th:errors="*{vendor}" class="error"></span>
     </div>
     <div class="form-group">
-        <label th:for="initialStock">Initial Stock</label>
-        <input class="form-control" th:field="*{initialStock}" />
-        <span th:errors="*{initialStock}" class="error"></span>
+        <label th:for="stock">Initial Stock</label>
+        <input class="form-control" th:field="*{stock}" />
+        <span th:errors="*{stock}" class="error"></span>
     </div>
 
 

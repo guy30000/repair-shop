@@ -16,8 +16,9 @@ public class Inventory {
 
     private String description;
 
-    @Digits(integer=30, fraction=0)
-    private double sku;
+    @NotNull
+    @Size(min=3, max=30)
+    private String sku;
 
     private String vendor;
 
@@ -32,18 +33,18 @@ public class Inventory {
     private double salePrice;
 
     @Min(0)
-    private int initialStock;
+    private int stock;
 
 
     ///
-    public Inventory(String name, String description, int sku, double purchaseCost, double salePrice, String vendor, int initialStock) {
+    public Inventory(String name, String description, String sku, double purchaseCost, double salePrice, String vendor, int stock) {
         this.name = name;
         this.description = description;
         this.sku = sku;
         this.purchaseCost = purchaseCost;
         this.salePrice = salePrice;
         this.vendor = vendor;
-        this.initialStock = initialStock;
+        this.stock = stock;
     }
 
     public Inventory() { }
@@ -76,11 +77,11 @@ public class Inventory {
         this.description = description;
     }
 
-    public double getSku() {
+    public String getSku() {
         return sku;
     }
 
-    public void setSku(int sku) {
+    public void setSku(String sku) {
         this.sku = sku;
     }
 
@@ -108,12 +109,12 @@ public class Inventory {
         this.salePrice = salePrice;
     }
 
-    public int getInitialStock() {
-        return initialStock;
+    public int getStock() {
+        return stock;
     }
 
-    public void setInitialStock(int initialStock) {
-        this.initialStock = initialStock;
+    public void setStock(int Stock) {
+        this.stock = Stock;
     }
 
 }

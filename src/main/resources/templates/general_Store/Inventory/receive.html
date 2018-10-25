@@ -14,12 +14,14 @@
         <th>SKU</th>
         <th>Vendor</th>
         <th>Price</th>
+        <th>Stock</th>
     </tr>
     <tr th:each="item : ${inventory}">
         <td th:text="${item.name}"></td>
         <td th:text="${item.sku}"></td>
         <td th:text="${item.vendor}"></td>
         <td th:text="${item.salePrice}"></td>
+        <td th:text="${item.stock}"></td>
         <!--<td><a th:href="'/cheese/edit/' + ${cheese.id}" th:text="Edit" >></a></td>-->
     </tr>
 

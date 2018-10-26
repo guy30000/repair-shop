@@ -2,6 +2,7 @@ package org.launchcode.general_Store.controllers;
 
 import org.launchcode.general_Store.models.Inventory;
 import org.launchcode.general_Store.models.data.InventoryDao;
+import org.launchcode.general_Store.models.forms.ReceiveInvForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(value = "general_Store/Inventory")
@@ -60,23 +62,51 @@ public class InventoryController {
     @RequestMapping(value = "receive", method = RequestMethod.POST)
     public String ProcessReceiveInv( Model model, @RequestParam(required=false) String keyword,
                 @RequestParam(required=false) String search,
-                @RequestParam(required=false) String addInvSubmit,
-                @RequestParam(required=false) int[] itemID) {
-        if (search != null && search.equals("Search Inventory")) {
-            System.out.println("Hello buttz 2 " + keyword +" - "+ search);
-//            if (inventoryDao.findAll().equals(keyword))    {
-//                System.out.println("Hello buttz 4 " + keyword +" - "+ search);
-//            }
-//            if (keyword.equals(inventoryDao.findAll())){
-//                System.out.println("Hello buttz 4 " + keyword +" - "+ search);
-//            }
-            if (addInvSubmit != null){
-                System.out.println("Hello buttz 5 " + keyword +" - "+ search);
-            }
+                @RequestParam(required=false) String addInv,
+                                     @RequestParam(required=false) String itemId,
+                                     @RequestParam(required=false) String quantity,
+                @ModelAttribute ReceiveInvForm recForm) {
+//        if (search != null && search.equals("Search Inventory")) {
+//            System.out.println("Hello buttz 2 " + keyword +" - "+ search);
+////            if (inventoryDao.findAll().equals(keyword))    {
+////                System.out.println("Hello buttz 4 " + keyword +" - "+ search);
+////            }
+////            if (keyword.equals(inventoryDao.findAll())){
+////                System.out.println("Hello buttz 4 " + keyword +" - "+ search);
+////            }
+//        }
+        System.out.println("Hello buttz 5 " + recForm.getItemId() +" - "+ recForm.getQuantity() );
+        System.out.println("Hello buttz 6 " + itemId +" - "+ quantity );
+
+//        if (addInv != null){
+//        for (  update : recForm.getQuantity())     {
+//            System.out.println("Hello buttz 5 " + recForm.getItemId() +" - "+ recForm.getQuantity());
+////            Inventory updateQuantity = inventoryDao.findOne());
+////            updateQuantity.setStock(inventoryDao.findOne(recForm.getItemId()).getStock() + recForm.getQuantity());
+////            inventoryDao.save(updateQuantity);
+//            System.out.println("Hello buttz y= " );
+//        }   }     //}if}for
+//        ArrayList<Integer> id = new ArrayList<Integer>();
+//        ArrayList<Integer> add = new ArrayList<Integer>();
+
+        ///This is the working code that may be pulling me through
+//        for (int i = 0; i < recForm.getItemId().size(); i++){
+//            if (recForm.getItemId().size() == recForm.getQuantity().size()) {
+//                Inventory updateQuantityddddd = inventoryDao.findOne();
+//
+//
+//   //             int sum = recForm.getItemId().get(i) + add.get(i);
+//                Inventory updateQuantity = inventoryDao.findOne(i);
+//   //             updateQuantity.setStock(inventoryDao.findOne(i + add);
+//                inventoryDao.save(updateQuantity);
+//                System.out.println(sum);
+//            } else { System.out.println("ERROR: Invetroty list size is different from quantities list");  }
+//        }
 
 
-        }
-        System.out.println("Hello buttz 3 " + keyword +" - "+ search + " - " + addInvSubmit);
+        System.out.println("Hello buttz 3 " + keyword +" - "+ search + " - " + addInv);
+        model.addAttribute("title", "");
+        model.addAttribute("inventory", inventoryDao.findAll());
         return "general_Store/Inventory/receive";
     }
 

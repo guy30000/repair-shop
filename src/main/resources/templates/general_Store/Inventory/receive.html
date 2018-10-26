@@ -18,7 +18,7 @@
     </form>
 
 
-<form object="addInvSubmit" method="post" >
+<form object="addInvSubmit" method="post" th:object="${recForm}" >
 <table class="table">
     <tr>
         <!--<th>Select</th>-->
@@ -28,15 +28,17 @@
         <th>Current Stock</th>
         <th>Add</th>
     </tr>
+    <div>
     <tr th:each="item : ${inventory}"  >
         <!--<td><input type="checkbox" name="itemID" th:value="${item.id}" th:id="${item.id}"/></td>-->
         <td th:text="${item.name}"></td>
         <td th:text="${item.sku}"></td>
         <td th:text="${item.vendor}"></td>
         <td th:text="${item.stock}"></td>
-        <input type="hidden" name="itemID" th:value="*{item.id}" />
-        <td><input type="number" name="quantity" min="0" max="9999"/></td>
+        <input type="hidden" name="itemId" th:value="${item.id}" />
+        <td><input type="number" th:name="quantity" min="0" max="9999" th:value="${quantity}"/></td>
     </tr>
+    </div>
 </table>
     <input type="submit" name="addInv" value="Add Inventory" />
 </form>

@@ -78,37 +78,21 @@ public class InventoryController {
         System.out.println("Hello buttz 5 " + recForm.getItemId() +" - "+ recForm.getQuantity() );
         System.out.println("Hello buttz 6 " + itemId +" - "+ quantity );
 
-//        if (addInv != null){
-//        for (  update : recForm.getQuantity())     {
-//            System.out.println("Hello buttz 5 " + recForm.getItemId() +" - "+ recForm.getQuantity());
-////            Inventory updateQuantity = inventoryDao.findOne());
-////            updateQuantity.setStock(inventoryDao.findOne(recForm.getItemId()).getStock() + recForm.getQuantity());
-////            inventoryDao.save(updateQuantity);
-//            System.out.println("Hello buttz y= " );
-//        }   }     //}if}for
-//        ArrayList<Integer> id = new ArrayList<Integer>();
-//        ArrayList<Integer> add = new ArrayList<Integer>();
 
-        //This is the working code that may be pulling me through
-        for (int i = 0; i < recForm.getItemId().size(); i++){
-            if (recForm.getItemId().size() == recForm.getQuantity().size()) {
-//                if ( recForm.getQuantity().get(i).equals(null)){ System.out.println("Null skipping");break; }
-//                else {
-                int idOfCurrentItem = Integer.valueOf((String) recForm.getItemId().get(i));
-                int newQuantity = Integer.valueOf((String) recForm.getQuantity().get(i));
-                Inventory itemToBeUpdated = inventoryDao.findOne(idOfCurrentItem);
-                itemToBeUpdated.setStock(itemToBeUpdated.getStock() +  newQuantity);
-                inventoryDao.save(itemToBeUpdated);
-//                int newStock = (int) itemToBeUpdated.getStock();
-       //       System.out.println("stock " + itemToBeUpdated.getStock() + " - " + quantityToBeAdded );
-                System.out.println("stock b " +  idOfCurrentItem + " - " +  newQuantity );
-                System.out.println("stock " +  recForm.getQuantity().get(i) + " - " +   recForm.getItemId().get(i) );
-//                int sum = recForm.getItemId().get(i) + add.get(i);
-////                Inventory updateQuantity = inventoryDao.findOne(i);
-////   //             updateQuantity.setStock(inventoryDao.findOne(i + add);
-//                }
-            } else { System.out.println("ERROR: Invetroty list size is different from quantities list");  }
-       }
+    //Receive Inventory
+        if (recForm.getItemId().size() == recForm.getQuantity().size()) {
+                for (int i = 0; i < recForm.getItemId().size(); i++) {
+                if ( recForm.getQuantity().get(i) == ""){ System.out.println("Null skipping"); continue;
+                } else {
+                    int idOfCurrentItem = Integer.valueOf((String) recForm.getItemId().get(i));
+                    int newQuantity = Integer.valueOf((String) recForm.getQuantity().get(i));
+                    Inventory itemToBeUpdated = inventoryDao.findOne(idOfCurrentItem);
+                    itemToBeUpdated.setStock(itemToBeUpdated.getStock() + newQuantity);
+                    inventoryDao.save(itemToBeUpdated);
+                    System.out.println("stock b " + idOfCurrentItem + " - " + newQuantity);
+                    System.out.println("stock " + recForm.getQuantity().get(i) + " - " + recForm.getItemId().get(i));
+                } } } else { System.out.println("ERROR: Invetroty list size is different from quantities list");  }
+    //End Receive Inventory  ^
 
 
         System.out.println("Hello buttz 3 " + keyword +" - "+ search + " - " + addInv);

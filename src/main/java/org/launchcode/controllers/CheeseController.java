@@ -109,7 +109,7 @@ public class CheeseController {
         cheeseDao.save(editCheese);
         System.out.println("Chezcntrlr edit-process " + editCheese.getName() + " - " + editCheese.getId() + "         -  " + editCheese.getDescription() + " - " + editCheese.getCategory());
 
-        return "redirect:/cheese"; //place holder
+        return "redirect:/cheese";
     }
 
 }

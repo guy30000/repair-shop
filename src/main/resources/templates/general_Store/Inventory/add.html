@@ -44,9 +44,9 @@
         <input class="form-control" th:field="*{stock}" />
         <span th:errors="*{stock}" class="error"></span>
     </div>
+    <input type="hidden" name="itemId" th:value="${inventory.id}" />
 
-
-    <input type="submit" value="Create New Item" />
+    <input type="submit" th:value="${buttonName}" />
 </form>
 
 </body>

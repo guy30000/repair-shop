@@ -114,11 +114,29 @@ public class InventoryController {
 
     //////////////////////////////View
     @RequestMapping(value = "view", method = RequestMethod.GET)
-    public String displayViewInv(Model model, @RequestParam(required = false) String sortBy) {
+    public String displayViewInv(Model model) {
         model.addAttribute("title", "");
         model.addAttribute("inventory", inventoryDao.findAll());
         System.out.println("view  ");
         //model.addAttribute(new SearchForm());
+
+        return "general_Store/Inventory/view";
+    }
+
+    @RequestMapping(value = "view", method = RequestMethod.POST)
+    public String processSearchViewInv(Model model, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String keyword, @RequestParam(required = false) String search, @RequestParam(required = false) String addInv, @RequestParam(required = false) String itemId, @RequestParam(required = false) String quantity, @ModelAttribute ReceiveInvForm recForm) {
+        if (search != null && search.equals("Search Inventory")) {
+            System.out.println("Hello buttz 2 " + keyword + " - " + search);
+            ArrayList<Inventory> searchResults = new ArrayList<>();
+            for ( Inventory singleItem : inventoryDao.findAll()) {
+                if (singleItem.getName().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getVendor().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getSku().equalsIgnoreCase(keyword) ){
+                    searchResults.add(singleItem);
+                    System.out.println("Hello buttz 7 " + keyword + " - "+ singleItem.getName() );
+                }
+            }
+            model.addAttribute("title", "View: " + keyword);
+            model.addAttribute("inventory", searchResults);
+        }
         return "general_Store/Inventory/view";
     }
 

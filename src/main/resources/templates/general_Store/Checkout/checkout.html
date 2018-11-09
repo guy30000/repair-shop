@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<!--<link href="/css/styles.css" rel="stylesheet" type="text/css"/>-->
+
 <head th:replace="general_Store/fragmentsGS :: head"></head>
 <body class="container">
 
-<!--<h1 th:text="${title}">Default Title</h1>-->
 
+<!--SearchForm-->
 <nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
 <nav th:replace="general_Store/fragmentsGS :: title"></nav>
-
-<!--<form th:action="@{/search/results}" th:object="${searchForm}">-->
 <form object="keyword" method="post" >
     <div class="form-group">
         <label th:for="keyword">Search by item name, SKU or vendor</label>
@@ -16,33 +16,46 @@
         <input type="submit" name="search" value="Search Inventory"/>
     </div>
 </form>
-
-
-<form object="addInvSubmit" method="post" th:object="${recForm}" >
+<!--End SearchForm-->
+<!--Inventory list-->
+<div class="split left">
+    <div class="centered">
+<form object="addInvSubmit" method="post" th:object="${addToCartForm}" >
     <table class="table" id="inventory">
         <tr>
-            <!--<th>Select</th>-->
             <th><input type="submit" name="sortBy" value="Name" /></th>
             <th><input type="submit" name="sortBy" value="SKU" /></th>
-            <th><input type="submit" name="sortBy" value="Price" /></th>
             <th><input type="submit" name="sortBy" value="Vendor" /></th>
-            <th><input type="submit" name="sortBy" value="Current Stock" /></th>
-            <th>-</th>
+            <th><input type="submit" name="sortBy" value="Stock" /></th>
 
+            <th>Quantity</th>
         </tr>
         <div>
             <tr th:each="item : ${inventory}"  >
                 <!--<td><input type="checkbox" name="itemID" th:value="${item.id}" th:id="${item.id}"/></td>-->
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.sku}"></td>
-                <td th:text="${item.salePrice}"></td>
                 <td th:text="${item.vendor}"></td>
                 <td th:text="${item.stock}"></td>
-                <td><a th:href="'/general_Store/Inventory/view/edit/' + ${item.id}" th:text="Edit">></a></td>
                 <input type="hidden" name="itemId" th:value="${item.id}" />
+                <td><input type="number" th:name="quantity" min="0" max="9999" th:value="${quantity}"/></td>
             </tr>
         </div>
     </table>
+    <input type="submit" name="addToOrder" value="Add to Cart" />
 </form>
+    </div >
+</div>
+<!-- end Inventory list-->
+<!--Cart Window-->
+<div class="split right">
+
+    <p class="registerBox">
+
+    </p>
+    <input type="submit" name="completeOrder" value="Complete Order" />
+</div>
+<!--End Cart Window-->
+
 </body>
 </html>

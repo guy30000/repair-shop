@@ -60,31 +60,36 @@ public class InventoryController {
 
     @RequestMapping(value = "receive", method = RequestMethod.POST)
     public String ProcessReceiveInv(Model model, @RequestParam(required = false) String keyword, @RequestParam(required = false) String search, @RequestParam(required = false) String addInv, @RequestParam(required = false) String itemId, @RequestParam(required = false) String quantity, @ModelAttribute ReceiveInvForm recForm, @RequestParam(required = false) String sortBy) {
-        //Search FUnction
+        /////////////////////////////////// Search FUnction
         if (search != null && search.equals("Search Inventory")) {
             System.out.println("Hello buttz 2 " + keyword + " - " + search);
             ArrayList<Inventory> searchResults = new ArrayList<>();
             for ( Inventory singleItem : inventoryDao.findAll()) {
                 if (singleItem.getName().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getVendor().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getSku().equalsIgnoreCase(keyword) ){
                     searchResults.add(singleItem);
-                    System.out.println("Hello buttz 7 " + keyword + " - "+ singleItem.getName() );
                 }
             }
             model.addAttribute("title", "Search: " + keyword);
             model.addAttribute("inventory", searchResults);
             return "general_Store/Inventory/receive";
         }
-        // End Search FUnction^
-        //Sort by...
+        /////////////////////////////////// End Search FUnction^
+        /////////////////////////////////// Sort by...
 //        System.out.println("Sort Inv by -  " + sortBy);
 //        if (sortBy.equals("Name")) {
+//            //https://stackoverflow.com/questions/5279570/sql-phpmyadmin-alter-table-order-by-id-ascending-make-permanent
+//            String sqlSortQuery =
+//                    "SELECT  * FROM inventoryDao.findAll() ORDER BY `ID` ASC";
+//
+//            //SELECT statement... [WHERE condition | GROUP BY `field_name(s)` HAVING condition] ORDER BY `field_name(s)` [ASC | DESC];
+//
 //            System.out.println("Sort Inv by - n --- " + sortBy);
 //            model.addAttribute("title", "");
 //            model.addAttribute("inventory", inventoryDao.findAll());
 //            return "general_Store/Inventory/receive";
 //        }
-        //end sort buy ^
-        //Receive Inventory
+        /////////////////////////////////// end sort buy ^
+        /////////////////////////////////// Receive Inventory
         if (addInv != null && addInv.equals("Add Inventory")) {
             if (recForm.getItemId().size() == recForm.getQuantity().size()) {
                 System.out.println("sddinv test- " + addInv);
@@ -106,7 +111,7 @@ public class InventoryController {
                 System.out.println("ERROR: Invetroty list size is different from quantities list");
             }
         }
-        //End Receive Inventory  ^
+        /////////////////////////////////// /End Receive Inventory  ^
         model.addAttribute("title", "");
         model.addAttribute("inventory", inventoryDao.findAll());
         return "general_Store/Inventory/receive";

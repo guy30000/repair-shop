@@ -21,7 +21,7 @@ public class Category {
     private String name; //property (intellejay calles it a field
 
     @OneToMany  //Each cat will have many cheese. I gues the cheese side will have a many to one
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id")  //corisponds to a colum on the other
     private List<Cheese> cheeses = new ArrayList<>();
 
     //I think these are constructorsv

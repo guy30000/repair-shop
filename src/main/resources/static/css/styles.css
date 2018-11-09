@@ -1,7 +1,117 @@
 body {
     font-family: sans-serif;
+    background-color: powderblue;
 }
 
 nav {
     margin-bottom: 20px;
 }
+
+
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1%;
+    top: 30%;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    left: 0;
+    top: 20%;
+    height: 80%;
+  #  background-color: #111;
+    overflow: scroll;
+}
+
+.right {
+    right: 0;
+   # background-color: green;
+   top: 30%;
+   height: 80%;
+   overflow: scroll;
+}
+/*
+#.centered {
+#    position: absolute;
+#    top: 50%;
+#    left: 50%;
+#    transform: translate(-50%, -50%);
+#    text-align: center;
+#}
+
+#.centered img {
+#    width: 150px;
+#    border-radius: 50%;
+#}
+
+#html,body{
+#  height:100%;
+#}
+#container{
+#  height:100%;
+#  width:100%;
+#  font-size:0;
+#  margin:0 auto;
+#}
+#.item{
+#  display:inline-block;
+#  vertical-align:top;
+#  background:#00BF1D;
+#  height:100%;
+#  width:50%;
+#}
+#.item:nth-child(2){
+#  background:#F4CAAE;
+#} */
+
+#inventory {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#inventory td, #inventory th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#inventory tr:nth-child(even){background-color: #8C9497;}
+
+#inventory tr:hover {background-color: #ddd;}
+
+/* Title bar on inventor page */
+#inventory th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #424546;
+    color: Black;
+
+}
+
+/* Checkout border inset or grove */
+div.inset {border-style: inset;}
+p.groove {border-style: groove;}
+
+/* Box */
+.registerBox {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+    top: 30%;
+    height: 75%;
+    overflow: scroll;
+}
+
+/* splitting top and bottom */
+#top,
+#bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 50%;
+}
+

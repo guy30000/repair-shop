@@ -2,6 +2,7 @@ package org.launchcode.general_Store.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Entity
 public class Inventory {
@@ -35,6 +36,8 @@ public class Inventory {
     @Min(0)
     private int stock;
 
+//    @ManyToMany(mappedBy = "Inventory")  //3:00 p1
+//    private List<Invoice> menus;
 
     ///
     public Inventory(String name, String description, String sku, double purchaseCost, double salePrice, String vendor, int stock) {

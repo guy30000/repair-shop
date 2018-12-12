@@ -100,6 +100,7 @@ public class InventoryController {
                     } else {
                         int idOfCurrentItem = Integer.valueOf((String) recForm.getItemId().get(i));
                         int newQuantity = Integer.valueOf((String) recForm.getQuantity().get(i));
+                        //Inventory itemToBeUpdated = inventoryDao.findOne(idOfCurrentItem);
                         Inventory itemToBeUpdated = inventoryDao.findOne(idOfCurrentItem);
                         itemToBeUpdated.setStock(itemToBeUpdated.getStock() + newQuantity);
                         inventoryDao.save(itemToBeUpdated);
@@ -156,11 +157,12 @@ public class InventoryController {
 
     @RequestMapping(value = "view/edit/{itemIdV}", method = RequestMethod.POST)
     public String processViewEditForm(@ModelAttribute @Valid Inventory editItem, Errors errors, Model model, @RequestParam(required = false) int itemId) {
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title", "Veiw/Edit item: ");
-//            model.addAttribute("inventory", editItem);
-//            return "general_Store/Inventory/view";
-//        }
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Veiw/Edit item: ");
+            model.addAttribute("inventory", editItem);
+            model.addAttribute("buttonName", "Save Changes");
+            return "general_Store/Inventory/add";
+        }
 
             editItem.setId(itemId);
             System.out.println("Edit Save - " + editItem.getName() + " - " + itemId + "  -  " + editItem.getDescription() + " - " );

@@ -36,8 +36,10 @@ public class Inventory {
     @Min(0)
     private int stock;
 
-//    @ManyToMany(mappedBy = "Inventory")  //3:00 p1
-//    private List<Invoice> menus;
+
+
+    @ManyToMany(mappedBy = "itemsInCart")  //3:00 p1
+    private List<Invoice> cart;
 
     ///
     public Inventory(String name, String description, String sku, double purchaseCost, double salePrice, String vendor, int stock) {
@@ -118,6 +120,15 @@ public class Inventory {
 
     public void setStock(int Stock) {
         this.stock = Stock;
+    }
+
+//getters and setters for cart combo., probly deleting this later.
+    public List<Invoice> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<Invoice> cart) {
+        this.cart = cart;
     }
 
 }

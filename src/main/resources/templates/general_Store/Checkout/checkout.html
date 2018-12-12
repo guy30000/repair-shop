@@ -50,9 +50,28 @@
 <!--Cart Window-->
 <div class="split right">
 
-    <p class="registerBox">
+    <!--<p class="registerBox">dfgdsfg-->
+    <table id="order" class="registerBox">
+        <tr>
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Vendor</th>
+            <th>Stock</th>
+            <th>Quantity</th>
+        </tr>
+        <div>
+            <tr th:each="items : ${invoice}"  >
+                <td th:text="${items.name}"></td>
+                <td th:text="${items.sku}"></td>
+                <td th:text="${items.vendor}"></td>
+                <td th:text="${items.stock}"></td>
+                <!--<input type="hidden" name="itemId" th:value="${item.id}" />-->
+                <!--<td><input type="number" th:name="quantity" min="0" max="9999" th:value="${quantity}"/></td>-->
+            </tr>
+        </div>
+    </table>
 
-    </p>
+    <!--</p>-->
     <input type="submit" name="completeOrder" value="Complete Order" />
 </div>
 <!--End Cart Window-->

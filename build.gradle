@@ -34,7 +34,7 @@ dependencies {
 	runtime('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
+//This is what allows HTML to be refreshed live
 bootRun {
 	addResources = true
 }

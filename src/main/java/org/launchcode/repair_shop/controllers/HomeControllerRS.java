@@ -5,10 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value="home")
+@RequestMapping(value="repair_shop")
 public class HomeControllerRS {
+
+    @RequestMapping(value = "home")
     public String index (Model model){
-        model.addAttribute( "title", "Fix Tt Up");
-        return "repair_shop/home";
+            return "repair_shop/home";
+        }
     }
-}
+

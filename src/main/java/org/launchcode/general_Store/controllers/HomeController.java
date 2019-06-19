@@ -11,7 +11,7 @@ public class HomeController {
     @RequestMapping(value = "home")
     public String index(Model model) {
         model.addAttribute("title", "Bill's General Store");
-        System.out.println("HomeController");
+        System.out.println("GSHomeController");
         return "general_Store/home";
     }
 

@@ -8,13 +8,12 @@
 <nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
 <nav th:replace="general_Store/fragmentsGS :: title"></nav>
 
-<ul>
-
-    <li><a href="/general_Store/Inventory/view">View/Search/Edit</a></li>
-    <li><a href="/general_Store/Inventory/add">Add new item to inventory</a></li>
-    <li><a href="/general_Store/Inventory/receive">Receive inventory</a></li>
-
-</ul>
-
+<form method="post" style="max-width:600px;" th:object="${newpeople}">
+    <div class="form-group">
+        <label th:for="name">Name (required)</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+NewPeople
 </body>
 </html>

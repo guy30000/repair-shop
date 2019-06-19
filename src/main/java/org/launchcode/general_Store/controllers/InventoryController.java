@@ -1,6 +1,7 @@
 package org.launchcode.general_Store.controllers;
 
 import org.launchcode.general_Store.models.Inventory;
+import org.launchcode.general_Store.models.InventorySearch;
 import org.launchcode.general_Store.models.data.InventoryDao;
 import org.launchcode.general_Store.models.forms.ReceiveInvForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,13 +63,14 @@ public class InventoryController {
     public String ProcessReceiveInv(Model model, @RequestParam(required = false) String keyword, @RequestParam(required = false) String search, @RequestParam(required = false) String addInv, @RequestParam(required = false) String itemId, @RequestParam(required = false) String quantity, @ModelAttribute ReceiveInvForm recForm, @RequestParam(required = false) String sortBy) {
         /////////////////////////////////// Search FUnction
         if (search != null && search.equals("Search Inventory")) {
-            System.out.println("Hello buttz 2 " + keyword + " - " + search);
             ArrayList<Inventory> searchResults = new ArrayList<>();
             for ( Inventory singleItem : inventoryDao.findAll()) {
                 if (singleItem.getName().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getVendor().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getSku().equalsIgnoreCase(keyword) ){
                     searchResults.add(singleItem);
                 }
             }
+
+
             model.addAttribute("title", "Search: " + keyword);
             model.addAttribute("inventory", searchResults);
             return "general_Store/Inventory/receive";
@@ -140,6 +142,8 @@ public class InventoryController {
                     System.out.println("Hello buttz 7 " + keyword + " - "+ singleItem.getName() );
                 }
             }
+
+            new InventorySearch(keyword); //this line is not flagged but not what it needs to be
             model.addAttribute("title", "View: " + keyword);
             model.addAttribute("inventory", searchResults);
         }

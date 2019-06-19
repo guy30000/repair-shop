@@ -32,7 +32,7 @@ public class Cart {
 //        Inventory cartItemToRemove = getById(id);
 //        cart.remove(cartItemToRemove);
 //    }
-
+//
 //
 //    public static Inventory getById(int id) {  //this is used in the add/remove methds to get by id
 //

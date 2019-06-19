@@ -79,7 +79,7 @@ public class CheckoutController {
                         ///Tinkiring with invoice
                         System.out.println("Test invoice test1- " + Integer.valueOf((String) addToCartForm.getItemId().get(i)) + " - " + idOfCurrentItem);
 //                        Cart.add(Integer.valueOf((String) addToCartForm.getItemId().get(i)));  //breaker
-                        Cart.add(idOfCurrentItem);  //breaker
+  //                      Cart.add(idOfCurrentItem);  //breaker
  //                       System.out.println("Test invoice test2- " + Cart.getById(0));
 
                         Calendar cal = Calendar.getInstance();
@@ -113,5 +113,9 @@ public class CheckoutController {
                     return "general_Store/Checkout/checkout";
 
     }
+
+
+
+
 
  }

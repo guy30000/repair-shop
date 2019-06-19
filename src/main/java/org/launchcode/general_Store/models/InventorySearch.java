@@ -1,4 +1,4 @@
-package org.launchcode.general_Store.controllers;
+package org.launchcode.general_Store.models;
 
 import org.launchcode.general_Store.models.Inventory;
 import java.util.ArrayList;
@@ -19,14 +19,27 @@ public class InventorySearch {
     @Autowired
     private InventoryDao inventoryDao;
 
-    public void InventorySearch(String keyword) {
+    ArrayList<Inventory> searchResults = new ArrayList<>();
 
-        ArrayList<Inventory> searchResults = new ArrayList<>();
+    public InventorySearch(String keyword) {
+    }
+
+    public ArrayList InventorySearch(String keyword) {
+
         for (Inventory singleItem : inventoryDao.findAll()) {
             if (singleItem.getName().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getVendor().toLowerCase().contains(keyword.toLowerCase()) || singleItem.getSku().equalsIgnoreCase(keyword)) {
                 searchResults.add(singleItem);
+                System.out.println("thing thing thing "  + singleItem);
             }
-          //  return searchResults;
         }
+        return searchResults;
     }
+
+    public InventorySearch() {}
+
+
+    public ArrayList getSearchResults() {
+        return searchResults;
+    }
+
 }

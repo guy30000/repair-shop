@@ -8,7 +8,7 @@
 <nav th:replace="general_Store/fragmentsGS :: navigation"></nav>
 <nav th:replace="general_Store/fragmentsGS :: title"></nav>
 
-<!--<form th:action="@{/search/results}" th:object="${searchForm}">-->
+
 <form object="keyword" method="post" >
     <div class="form-group">
         <label th:for="keyword">Search by item name, SKU or vendor</label>
@@ -21,18 +21,17 @@
 <form object="addInvSubmit" method="post" th:object="${recForm}" >
     <table class="table" id="inventory">
         <tr>
-            <!--<th>Select</th>-->
-            <th><input type="submit" name="sortBy" value="Name" /></th>
-            <th><input type="submit" name="sortBy" value="SKU" /></th>
-            <th><input type="submit" name="sortBy" value="Price" /></th>
-            <th><input type="submit" name="sortBy" value="Vendor" /></th>
-            <th><input type="submit" name="sortBy" value="Current Stock" /></th>
+
+            <th>Name</th>
+            <th>SKU</th>
+            <th>Price</th>
+            <th>Vendor</th>
+            <th>Current Stock</th>
             <th>-</th>
 
         </tr>
         <div>
             <tr th:each="item : ${inventory}"  >
-                <!--<td><input type="checkbox" name="itemID" th:value="${item.id}" th:id="${item.id}"/></td>-->
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.sku}"></td>
                 <td th:text="${item.salePrice}"></td>

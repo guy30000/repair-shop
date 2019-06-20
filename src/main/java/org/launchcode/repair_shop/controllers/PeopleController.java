@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,7 +26,7 @@ public class PeopleController {
         return "repair_shop/People/index";
     }
 
-    //                                                                     ------ADD
+    //                                                           ---------------------ADD
     @RequestMapping(value = "newCX", method = RequestMethod.GET)
     public String displayNewCXForm (Model model) {
         model.addAttribute("title", "Add New Customer");
@@ -43,14 +44,22 @@ public class PeopleController {
             return "repair_shop/people/newCX";
         }
         peopleDao.save(newpeople);
-        return "repair_shop/people/view";
+        return ("redirect:/repair_shop/people/view/" + newpeople.getId());
     }
     // End  ADD
-    //                                                                     ------VIEW
+    //                                                         --------- -----------VIEW
     @RequestMapping(value = "view", method = RequestMethod.GET)
     public String displayViewCx (Model model){
         model.addAttribute("title", "View Customers");
         model.addAttribute("cxs", peopleDao.findAll());
+        return "repair_shop/people/view";
+    }
+
+    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
+    public String displaySingeViewCx (Model model, @PathVariable int id){
+        model.addAttribute("title", "View Customers");
+        model.addAttribute("cxs", peopleDao.findOne(id));
+        System.out.println(id + "              ddddddddd");
         return "repair_shop/people/view";
     }
 }

@@ -9,7 +9,7 @@
 <form method="post" style="max-width:600px;" th:object="${newPeople}">
     <div class="form-group">
         <label th:for="firstName">First Name (required)</label>
-        <input class="form-control" th:field="*{firstName}" align="right" width="48" height="48"/>
+        <input class="form-control" th:field="*{firstName}" />
         <span th:errors="*{firstName}" class="error"></span>
     </div>
     <div class="form-group">

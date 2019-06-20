@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="general_Store/fragmentsGS :: head"></head>
+<body class="container">
+
+<nav th:replace="repair_shop/fragmentsRS :: navigation"></nav>
+<nav th:replace="repair_shop/fragmentsRS :: title"></nav>
+
+THis is where some people will be
+<table class="table">
+    <tr>
+        <th>First Name</th><th>Middle Initial</th><th>Last Name</th><th>Email</th><th>Phone</th>
+    </tr>
+
+
+    <ul th:each="cx : ${cxs}">
+        <tr>
+        <th th:text="${cx.firstName}"></th>
+        <th th:text="${cx.middleInitial}"></th>
+        <th th:text="${cx.lastName}"></th>
+        <th th:text="${cx.email}"></th>
+        <th th:text="${cx.phoneNumber}"></th>
+        </tr>
+    </ul>
+
+</table>
+
+</body>
+</html>

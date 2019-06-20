@@ -5,7 +5,12 @@ import org.launchcode.repair_shop.models.forms.NewPeople;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(value = "repair_shop/people")
@@ -20,7 +25,8 @@ public class PeopleController {
         return "repair_shop/People/index";
     }
 
-    @RequestMapping(value = "newCX")
+    //                                                                     ------ADD
+    @RequestMapping(value = "newCX", method = RequestMethod.GET)
     public String displayNewCXForm (Model model) {
         model.addAttribute("title", "Add New Customer");
         model.addAttribute("buttonName", "Add Customer");
@@ -28,4 +34,23 @@ public class PeopleController {
         return "repair_shop/people/newCX";
     }
 
+    @RequestMapping(value = "newCX", method = RequestMethod.POST)
+    public String processNewCXForm (Model model, @ModelAttribute @Valid NewPeople newpeople, Errors errors) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add New Customer");
+            model.addAttribute("buttonName", "Add Customer");
+            model.addAttribute(new NewPeople());
+            return "repair_shop/people/newCX";
+        }
+        peopleDao.save(newpeople);
+        return "repair_shop/people/view";
+    }
+    // End  ADD
+    //                                                                     ------VIEW
+    @RequestMapping(value = "view", method = RequestMethod.GET)
+    public String displayViewCx (Model model){
+        model.addAttribute("title", "View Customers");
+        model.addAttribute("cxs", peopleDao.findAll());
+        return "repair_shop/people/view";
+    }
 }

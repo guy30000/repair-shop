@@ -6,6 +6,16 @@
 <nav th:replace="repair_shop/fragmentsRS :: navigation"></nav>
 <nav th:replace="repair_shop/fragmentsRS :: title"></nav>
 
+
+<form object="peoplesearch" method="post" >
+    <div class="form-group">
+        <label th:for="peoplesearch">Search by name, email or phone</label>
+        <input class="form-control" field="peoplesearch" name="peoplesearch"/>
+        <input type="submit" name="search" value="Search People"/>
+    </div>
+</form>
+
+
 <table class="table">
     <tr>
         <th>First Name</th><th>Middle Initial</th><th>Last Name</th><th>Email</th><th>Phone</th>

@@ -48,27 +48,35 @@ public class PeopleController {
     }
     // End  ADD
     //                                                         --------- -----------VIEW
-    @RequestMapping(value = "view", method = RequestMethod.POST)
-    public String displayViewCx (Model model, @RequestParam(required = false) String peoplesearch){
+    @RequestMapping(value = "view", method = RequestMethod.GET)
+    public String displayViewCx (Model model){
         model.addAttribute("title", "View Customers");
         model.addAttribute("cxs", peopleDao.findAll());
-//        if (peoplesearch != null ){         //search function
-//            ArrayList<NewPeople> searchResults = new ArrayList<>();
-//            for (NewPeople singlePerson : peopleDao.findAll()){
-//                if (singlePerson.getFirstName().toLowerCase().contains(peoplesearch.toLowerCase()) ||
-//                        singlePerson.getLastName().toLowerCase().contains(peoplesearch.toLowerCase()) ||
-//                        singlePerson.getEmail().toLowerCase().contains(peoplesearch.toLowerCase()) ||
-//                        singlePerson.getPhoneNumber().contains(peoplesearch)){
-//                    searchResults.add(singlePerson);
-//                    model.addAttribute("cxs", searchResults);
-//                }
-//            }
-//        }                               // End search function
+        return "repair_shop/people/view";
+    }
+
+    @RequestMapping(value = "view", method = RequestMethod.POST)
+    public String processViewCx (Model model, @RequestParam(required = false) String peoplesearch){
+        model.addAttribute("title", "View Customers");
+        if (peoplesearch != null ){         //search function
+            ArrayList<NewPeople> searchResults = new ArrayList<>();
+            for (NewPeople singlePerson : peopleDao.findAll()){
+                if (singlePerson.getFirstName().toLowerCase().contains(peoplesearch.toLowerCase()) ||
+                        singlePerson.getLastName().toLowerCase().contains(peoplesearch.toLowerCase()) ||
+                        singlePerson.getEmail().toLowerCase().contains(peoplesearch.toLowerCase()) ||
+                        singlePerson.getPhoneNumber().contains(peoplesearch)){
+                    searchResults.add(singlePerson);
+                    model.addAttribute("cxs", searchResults);
+                }
+            }
+        }                               // End search function
 
 //        if (peoplesearch != null ) {         //search function experiment
-//            ArrayList<NewPeople> people;
+//            System.out.println("search function experiment             - ----    " + peoplesearch);
+//            ArrayList<NewPeople> people = peopleData.searchPeople(peoplesearch);
 //            people = peopleData.searchPeople(peoplesearch);
-//            model.addAttribute("cxs", people);
+//            //model.addAttribute("cxs", people);
+//            model.addAttribute("cxs", peopleDao.findAll());
 //        }                                 // end search function experiment
         return "repair_shop/people/view";
     }
@@ -79,5 +87,15 @@ public class PeopleController {
         model.addAttribute("cxs", peopleDao.findOne(id));
         System.out.println(id + "              ddddddddd");
         return "repair_shop/people/view";
+    }
+
+    @RequestMapping(value = "people/view/{cxId}", method = RequestMethod.GET)
+    public String displayViewEdit(Model model, @PathVariable int cxId){
+        model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
+        model.addAttribute("newPeople", peopleDao.findOne(cxId));
+        model.addAttribute("buttonName", "Update");
+        System.out.println( "      ----        displaySingeViewCx");
+
+        return "repair_shop/people/add";
     }
 }

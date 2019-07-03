@@ -8,6 +8,7 @@ public class PeopleData {
     private PeopleDao peopleDao;
 
     public ArrayList<NewPeople> searchPeople(String value) {
+        System.out.println("peopeldata            - ----    " + value);
 
      ArrayList<NewPeople> searchResults = new ArrayList<>();
 
@@ -18,10 +19,12 @@ public class PeopleData {
                     singlePerson.getLastName().toLowerCase().contains(value.toLowerCase()) ||
                     singlePerson.getEmail().toLowerCase().contains(value.toLowerCase()) ||
                     singlePerson.getPhoneNumber().contains(value)){
+
                 System.out.println("Match ");
                 searchResults.add(singlePerson);
             }
         }
+
         return searchResults;
     }
 

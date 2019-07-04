@@ -24,7 +24,7 @@
 
     <ul th:each="cx : ${cxs}">
         <tr>
-        <th><a th:href="'CREATE Ticket URL' + ${cx.id}" th:text="'building'"></a></th>
+        <th><a th:href="'/repair_shop/ticket/new/' + ${cx.id}" th:text="'Create Ticket'"></a></th>
         <th th:text="${cx.firstName}"></th>
         <th th:text="${cx.middleInitial}"></th>
         <th th:text="${cx.lastName}"></th>

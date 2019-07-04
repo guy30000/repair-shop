@@ -2,11 +2,11 @@ package org.launchcode.repair_shop.models.forms;
 
 import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class NewPeople {
@@ -29,6 +29,10 @@ public class NewPeople {
 
     @Email
     private String email;
+
+    @OneToMany
+    @JoinColumn(name ="ticket_id")
+    private List<Ticket> tickets = new ArrayList<>();
 
     @NotNull
     @Size(min=10,max=10, message = "Enter 10 digit in 1234567890 format")

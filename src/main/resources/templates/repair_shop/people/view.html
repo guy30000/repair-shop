@@ -18,18 +18,20 @@
 
 <table class="table">
     <tr>
-        <th>First Name</th><th>Middle Initial</th><th>Last Name</th><th>Email</th><th>Phone</th><th></th>
+        <th></th><th>First Name</th><th>Middle Initial</th><th>Last Name</th><th>Email</th><th>Phone</th><th></th>
     </tr>
 
 
     <ul th:each="cx : ${cxs}">
         <tr>
+        <th><a th:href="'CREATE Ticket URL' + ${cx.id}" th:text="'building'"></a></th>
         <th th:text="${cx.firstName}"></th>
         <th th:text="${cx.middleInitial}"></th>
         <th th:text="${cx.lastName}"></th>
         <th th:text="${cx.email}"></th>
         <th th:text="${cx.phoneNumber}"></th>
-        <th><a th:href="'view/' + ${cx.id}" th:text="'View/Edit'"></a></th>
+        <th><a th:href="'/repair_shop/people/view/' + ${cx.id}" th:text="'View/Edit'"></a></th>
+
         </tr>
     </ul>
 

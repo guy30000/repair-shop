@@ -32,6 +32,7 @@ public class PeopleController {
         model.addAttribute("title", "Add New Customer");
         model.addAttribute("buttonName", "Add Customer");
         model.addAttribute(new NewPeople());
+        //model.addAttribute("newpeople", new NewPeople());  //remomber this = above
         return "repair_shop/people/newCX";
     }
 
@@ -40,7 +41,6 @@ public class PeopleController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add New Customer");
             model.addAttribute("buttonName", "Add Customer");
-            model.addAttribute(new NewPeople());
             return "repair_shop/people/newCX";
         }
         peopleDao.save(newpeople);
@@ -81,21 +81,38 @@ public class PeopleController {
         return "repair_shop/people/view";
     }
 
-    @RequestMapping(value = "view/{id}", method = RequestMethod.GET)
-    public String displaySingeViewCx (Model model, @PathVariable int id){
-        model.addAttribute("title", "View Customers");
-        model.addAttribute("cxs", peopleDao.findOne(id));
-        System.out.println(id + "              ddddddddd");
-        return "repair_shop/people/view";
-    }
+    @RequestMapping(value = "view/{cxId}", method = RequestMethod.GET)
+    public String displaySingeViewCx (Model model, @PathVariable int cxId){
+        //model.addAttribute("title", "View Customers");
+        //model.addAttribute("cxs", peopleDao.findOne(cxId));
 
-    @RequestMapping(value = "people/view/{cxId}", method = RequestMethod.GET)
-    public String displayViewEdit(Model model, @PathVariable int cxId){
         model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
         model.addAttribute("newPeople", peopleDao.findOne(cxId));
         model.addAttribute("buttonName", "Update");
-        System.out.println( "      ----        displaySingeViewCx");
 
-        return "repair_shop/people/add";
+        System.out.println(cxId + "              ddddddddd");
+        return "repair_shop/people/newCX";
     }
+
+    @RequestMapping(value = "view/{cxId}", method = RequestMethod.POST)
+    public String processViewEdit(Model model, @ModelAttribute @Valid NewPeople newpeople, Errors errors, @PathVariable int cxId, @RequestParam(required = false) String peoplesearch) {
+       if (errors.hasErrors()) {
+           model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
+           //model.addAttribute("newPeople", peopleDao.findOne(cxId));
+           model.addAttribute("buttonName", "Update");
+           return "repair_shop/people/newCX";
+       }
+
+        newpeople.setId(cxId);
+        peopleDao.save(newpeople);
+        model.addAttribute("title", "View Customers");
+        model.addAttribute("cxs", peopleDao.findAll());
+        model.addAttribute("newPeople", peopleDao.findOne(cxId));
+        model.addAttribute("buttonName", "Update");
+        return "repair_shop/people/newCX";
+    }
+
+
+
+
 }

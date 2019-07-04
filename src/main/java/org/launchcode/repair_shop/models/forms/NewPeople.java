@@ -16,22 +16,22 @@ public class NewPeople {
     private int id;
 
     @NotNull
-    @Size(min=1, max=150)
+    @Size(min=1, max=150, message = "Name must not be blank")
     private String firstName;
 
     @NotNull
-    @Size(min=1, max=150)
+    @Size(min=1, max=150, message = "Last Name must not be blank")
     private String lastName;
 
 
-    @Size(min=1, max=1)
+    @Size(min=1, max=1, message = "Enter single letter")
     private String middleInitial;
 
     @Email
     private String email;
 
     @NotNull
-    @Size(min=10,max=10)
+    @Size(min=10,max=10, message = "Enter 10 digit in 1234567890 format")
     private String phoneNumber;
 
     public NewPeople(int id, String firstName, String lastName, String middleInitial, String email, String phoneNumber) {

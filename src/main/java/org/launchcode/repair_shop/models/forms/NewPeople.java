@@ -31,7 +31,7 @@ public class NewPeople {
     private String email;
 
     @OneToMany
-    @JoinColumn(name ="ticket_id")
+    @JoinColumn(name ="customer_id")
     private List<Ticket> tickets = new ArrayList<>();
 
     @NotNull

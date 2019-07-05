@@ -32,11 +32,16 @@
         <input class="form-control" th:field="*{phoneNumber}" />
         <span th:errors="*{phoneNumber}" class="error"></span>
     </div>
-    <input type="hidden" name="itemId" th:value="${newPeople.id}" />
+    <input type="hidden" name="id" th:value="${newPeople.id}" />
     <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
 
 </form>
-<button onclick="goBack()">Go Back</button>
+<a onclick="goBack()">Go Back</a> -
+
+<a th:if="${newPeople.id}" th:href="'/repair_shop/ticket/new/' + ${newPeople.id}">Start Ticket</a>
+<!--<th><a th:href="'/repair_shop/ticket/new/' + ${cx.id}" th:text="'Create Ticket Testing'"></a></th>-->
+
+
 <script>
 function goBack() {
   window.history.back();

@@ -100,6 +100,7 @@ public class PeopleController {
            model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
            //model.addAttribute("newPeople", peopleDao.findOne(cxId));
            model.addAttribute("buttonName", "Update");
+
            return "repair_shop/people/newCX";
        }
 

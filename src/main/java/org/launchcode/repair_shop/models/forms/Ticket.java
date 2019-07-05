@@ -17,13 +17,13 @@ public class Ticket {
     private int id;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Please enter item for repair")
     private String itemName;
 
     private String itemDescription;
 
     @NotNull
-    @Size(min=1, max=1000)
+    @Size(min=1, max=10000, message = "Please enter reason or what is being repaired")
     private String itemIssue;
 
     private ArrayList<String> itemNotes;
@@ -31,7 +31,12 @@ public class Ticket {
     @ManyToOne
     private NewPeople customer;
 
-    public Ticket(int id, String itemName, String itemDescription, String itemIssue, ArrayList itemNotes) {
+    private boolean open;
+
+
+
+
+    public Ticket(int id, String itemName, String itemDescription, String itemIssue, ArrayList itemNotes, boolean open) {
     }
 
 
@@ -84,5 +89,13 @@ public class Ticket {
 
     public void setCustomer(NewPeople customer) {
         this.customer = customer;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }

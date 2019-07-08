@@ -6,7 +6,32 @@
 <nav th:replace="repair_shop/fragmentsRS :: navigation"></nav>
 <nav th:replace="repair_shop/fragmentsRS :: title"></nav>
 
-TIcket page
 
+<form method="post" th:object="${ticket}">
+    <div class="form-group">
+    <p th:text="'Device: ' + *{itemName}"></p>
+        <p th:text="'Disc: ' + *{itemDescription}"></p>
+        <p th:text="'Issue: ' +*{itemIssue}"></p>
+
+
+        <table class="table">
+            <tr><th>Notes:</th></tr>
+
+        <ul th:each="note : *{itemNotes}">
+        <tr><th><p th:text="${note}" ></p></th></tr>
+        </ul>
+
+        </table>
+
+        <label th:for="newnote" >Add Note:</label>
+        <input class="form-control" field="newNote" name="newNote"/>
+        <input type="submit" name="Save Note" value="Save Note"/>
+        <input type="submit" name="closeticket" value="Mark ticket as complete"/>
+        <input type="submit" name="contactCx" value="Contacted Customer"/>
+
+    </div>
+
+
+</form>
 </body>
 </html>

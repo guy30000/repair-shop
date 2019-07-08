@@ -1,9 +1,6 @@
 package org.launchcode.repair_shop.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -26,6 +23,8 @@ public class Ticket {
     @Size(min=1, max=10000, message = "Please enter reason or what is being repaired")
     private String itemIssue;
 
+    @Lob
+    @Column(length=1000000) //increases database limit from 256 bites
     private ArrayList<String> itemNotes;
 
     @ManyToOne

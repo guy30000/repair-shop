@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import java.sql.Timestamp;
+
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -103,7 +105,27 @@ public class TicketController {
         Ticket order = ticketDao.findOne(ticketId);
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);
-        return "repair_shop/ticket/view";
+        return "repair_shop/ticket/order";
+    }
+
+    @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)
+    public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote, @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx){
+        Ticket order = ticketDao.findOne(ticketId);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
+        model.addAttribute("ticket", order);
+        if (newNote != null && newNote.length() > 0) {
+            order.getItemNotes().add(newNote + " +" + timestamp);
+        }
+        if (closeticket != null) {
+            order.setOpen(false);
+            order.getItemNotes().add("Ticket Complete +"  + timestamp);
+        }
+        if (contactCx != null) {
+            order.getItemNotes().add("Contacted Customer +"  + timestamp);
+        }
+        ticketDao.save(order);
+        return "repair_shop/ticket/order";
     }
 
 

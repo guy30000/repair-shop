@@ -8,7 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URL;
 import java.sql.Timestamp;
+
 
 
 import javax.validation.Valid;
@@ -17,6 +20,8 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping(value = "repair_shop/ticket")
 public class TicketController {
+
+    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
     @Autowired
     private TicketDao ticketDao;
@@ -35,7 +40,7 @@ public class TicketController {
         model.addAttribute("tickets", tickets);
         return "repair_shop/ticket/index";
     }
-
+////////////////New ticket
     @RequestMapping(value = "new/{cxId}", method = RequestMethod.GET)
     public String displayNewTicketForm (Model model, @PathVariable int cxId){
         model.addAttribute("title", "New Ticket");
@@ -44,7 +49,6 @@ public class TicketController {
         model.addAttribute(new Ticket());
         return "repair_shop/ticket/new";
     }
-
 
     @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)
     public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId){
@@ -55,26 +59,27 @@ public class TicketController {
             return "repair_shop/ticket/new";
         }
         ticket.setOpen(true);
+        ticket.getItemNotes().add(" +Ticket created+ "  + timestamp);
         ticketDao.save(ticket);
         //Ticket order = ticketDao.findOne(cxId);
         //model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         //model.addAttribute("ticket", order);
-        return "repair_shop/ticket/order";
+        return "redirect:/repair_shop/ticket/view/" + ticket.getId();
     }
-
+////////////////View ticket
     @RequestMapping(value = "view", method = RequestMethod.GET)
     public String viewTickets (Model model){
         ArrayList<Ticket> openTickets = new ArrayList<>();
         ArrayList<Ticket> closedTickets = new ArrayList<>();
         model.addAttribute("title", "All Tickets");
-        for ( Ticket ticket: ticketDao.findAll() )
+        for ( Ticket ticket: ticketDao.findAll() ) {
             if (ticket.isOpen() == true) {
                 openTickets.add(ticket);
             }
-        for ( Ticket ticket: ticketDao.findAll() )
             if (ticket.isOpen() != true) {
                 closedTickets.add(ticket);
             }
+        }
         model.addAttribute("tickets", openTickets);
         model.addAttribute("closedTickets", closedTickets);
         return "repair_shop/ticket/view";
@@ -85,17 +90,17 @@ public class TicketController {
         model.addAttribute("title", "View Customers");
         if (ticketsearch != null) {
             ArrayList<Ticket> tickets = new ArrayList<>();
+//            int tickSrchAsId = Integer.parseInt(ticketsearch);
             for (Ticket ticket : ticketDao.findAll()){
-                if (ticket.getCustomer().getFirstName().toLowerCase().contains(ticketsearch.toLowerCase()) ||
-                        (ticket.getCustomer().getLastName().toLowerCase().contains(ticketsearch.toLowerCase())) ||
-                        (ticket.getCustomer().getPhoneNumber().contains(ticketsearch))
-//                         || (ticket.getId() == ticketsearch)   // ticket numbner search not quote working
+                if (ticket.getCustomer().getFirstName().toLowerCase().contains(ticketsearch.toLowerCase())
+                        || (ticket.getCustomer().getLastName().toLowerCase().contains(ticketsearch.toLowerCase()))
+                        || (ticket.getCustomer().getPhoneNumber().contains(ticketsearch))
+//                        || (tickSrchAsId == (ticket.getId()))  //still working on getting lookup id working Trying to make it less than an if statement
                         ) {
                     tickets.add(ticket);
                     model.addAttribute("tickets", tickets);
                }
             }
-
         }
         return "repair_shop/ticket/view";
     }
@@ -111,7 +116,6 @@ public class TicketController {
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)
     public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote, @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx){
         Ticket order = ticketDao.findOne(ticketId);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);
         if (newNote != null && newNote.length() > 0) {
@@ -119,10 +123,10 @@ public class TicketController {
         }
         if (closeticket != null) {
             order.setOpen(false);
-            order.getItemNotes().add("Ticket Complete +"  + timestamp);
+            order.getItemNotes().add(" +Ticket Complete+ "  + timestamp);
         }
         if (contactCx != null) {
-            order.getItemNotes().add("Contacted Customer +"  + timestamp);
+            order.getItemNotes().add(" +Contacted Customer+ "  + timestamp);
         }
         ticketDao.save(order);
         return "repair_shop/ticket/order";

@@ -6,7 +6,7 @@
 <nav th:replace="repair_shop/fragmentsRS :: navigation"></nav>
 <nav th:replace="repair_shop/fragmentsRS :: title"></nav>
 
-<form object="ticketsearch" method="post" >
+<form object="ticketsearch" method="post" th:unless="${void}">
     <div class="form-group">
         <label th:for="ticketsearch">Search by Customer Name, Phone number, or Ticket Number</label>
         <input class="form-control" field="ticketsearch" name="ticketsearch"/>
@@ -14,7 +14,7 @@
     </div>
 </form>
 
-<table class="table">
+<table class="table" th:if="${tickets}">
 
     <tr>
         <th>Open Tickets</th>
@@ -22,6 +22,8 @@
         <th>Phone</th>
         <th>Item</th>
         <th>Ticket ID</th>
+        <th>Date Created</th>
+        <th>Last Updated</th>
     </tr>
     <p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
     <tr th:each="ticket : ${tickets}">
@@ -30,13 +32,17 @@
         <td th:text="${ticket.customer.phoneNumber}"></td>
         <td th:text="${ticket.itemName}"></td>
         <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.time}"></td>
+        <td th:text="${ticket.updated}"></td>
     </tr>
-    <tr>
+    <tr th:if="${closedTickets}">
         <th>Closed Tickets</th>
         <th>Customer Name</th>
         <th>Phone</th>
         <th>Item</th>
         <th>Ticket ID</th>
+        <th>Date Created</th>
+        <th>Last Updated</th>
     </tr>
     <tr th:each="ticket : ${closedTickets}">
         <td><a th:href="'/repair_shop/ticket/view/' + ${ticket.id}" th:text="View" ></a></td>
@@ -44,6 +50,8 @@
         <td th:text="${ticket.customer.phoneNumber}"></td>
         <td th:text="${ticket.itemName}"></td>
         <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.time}"></td>
+        <td th:text="${ticket.updated}"></td>
     </tr>
 
 </table>

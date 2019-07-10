@@ -9,19 +9,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URL;
-import java.sql.Timestamp;
-
-
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "repair_shop/ticket")
 public class TicketController {
 
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     @Autowired
     private TicketDao ticketDao;
@@ -46,24 +44,30 @@ public class TicketController {
         model.addAttribute("title", "New Ticket");
         model.addAttribute("buttonName", "Create Ticket");
         model.addAttribute("cx", peopleDao.findOne(cxId));
+        System.out.println("             Printing displayNewTicketForm   ");
         model.addAttribute(new Ticket());
         return "repair_shop/ticket/new";
     }
 
     @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)
     public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId){
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Ticket");
             model.addAttribute("buttonName", "Create Ticket");
             model.addAttribute("cx", peopleDao.findOne(cxId));
+
             return "repair_shop/ticket/new";
         }
+        Date date = new Date();
+        String timestamp = dateFormat.format(date);
+        ticket.setTime(timestamp);
         ticket.setOpen(true);
+        ticket.setUpdated("No Updates");
         ticket.getItemNotes().add(" +Ticket created+ "  + timestamp);
+        ticket.setTime(timestamp);
         ticketDao.save(ticket);
-        //Ticket order = ticketDao.findOne(cxId);
-        //model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
-        //model.addAttribute("ticket", order);
+
         return "redirect:/repair_shop/ticket/view/" + ticket.getId();
     }
 ////////////////View ticket
@@ -88,17 +92,29 @@ public class TicketController {
     @RequestMapping(value = "view", method = RequestMethod.POST)
     public String viewTickets (Model model, @RequestParam(required = false) String ticketsearch) {
         model.addAttribute("title", "View Customers");
+        ArrayList<Ticket> openTickets = new ArrayList<>();
+        ArrayList<Ticket> closedTickets = new ArrayList<>();
         if (ticketsearch != null) {
             ArrayList<Ticket> tickets = new ArrayList<>();
-//            int tickSrchAsId = Integer.parseInt(ticketsearch);
+            double tickSrchAsId = -1;
+            try {
+            tickSrchAsId = Integer.parseInt(ticketsearch); }
+            catch (Exception whateva) {
+            }
             for (Ticket ticket : ticketDao.findAll()){
                 if (ticket.getCustomer().getFirstName().toLowerCase().contains(ticketsearch.toLowerCase())
                         || (ticket.getCustomer().getLastName().toLowerCase().contains(ticketsearch.toLowerCase()))
                         || (ticket.getCustomer().getPhoneNumber().contains(ticketsearch))
-//                        || (tickSrchAsId == (ticket.getId()))  //still working on getting lookup id working Trying to make it less than an if statement
+                        || (tickSrchAsId == (ticket.getId()))  //still working on getting lookup id working Trying to make it less than an if statement
                         ) {
-                    tickets.add(ticket);
-                    model.addAttribute("tickets", tickets);
+                    if (ticket.isOpen() == true) {
+                        openTickets.add(ticket);
+                    }
+                    if (ticket.isOpen() != true) {
+                        closedTickets.add(ticket);
+                    }
+                    model.addAttribute("tickets", openTickets);
+                    model.addAttribute("closedTickets", closedTickets);
                }
             }
         }
@@ -118,19 +134,48 @@ public class TicketController {
         Ticket order = ticketDao.findOne(ticketId);
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);
+        //Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        //TimeDateStamp timestamp = new TimeDateStamp();
+
+        Date date = new Date();
+        String timestamp = dateFormat.format(date);
+
         if (newNote != null && newNote.length() > 0) {
             order.getItemNotes().add(newNote + " +" + timestamp);
+            order.setUpdated(timestamp);
         }
         if (closeticket != null) {
             order.setOpen(false);
             order.getItemNotes().add(" +Ticket Complete+ "  + timestamp);
+            order.setUpdated(timestamp);
         }
         if (contactCx != null) {
             order.getItemNotes().add(" +Contacted Customer+ "  + timestamp);
+            order.setUpdated(timestamp);
         }
         ticketDao.save(order);
         return "repair_shop/ticket/order";
     }
 
+    @RequestMapping(value = "view/cx/{cxId}", method = RequestMethod.GET)
+    public String viewCxTickets (Model model, @PathVariable int cxId){
+        model.addAttribute("title", "Tickets: " + peopleDao.findOne(cxId).getLastName() + ", " + peopleDao.findOne(cxId).getFirstName() );
+        ArrayList<Ticket> openTickets = new ArrayList<>();
+        ArrayList<Ticket> closedTickets = new ArrayList<>();
+        for (Ticket ticket : ticketDao.findAll()){
+            if ( ticket.getCustomer().getId() == cxId ) {
+                if (ticket.isOpen() == true) {
+                    openTickets.add(ticket);
+                }
+                if (ticket.isOpen() != true) {
+                    closedTickets.add(ticket);
+                }
+            }
+            model.addAttribute("tickets", openTickets);
+            model.addAttribute("closedTickets", closedTickets);
+            model.addAttribute("void", "void");
+        }
+        return "/repair_shop/ticket/view";
+    }
 
 }

@@ -18,6 +18,8 @@
         <th>Phone</th>
         <th>Item</th>
         <th>Ticket ID</th>
+        <th>Date Created</th>
+        <th>Last Updated</th>
 
     </tr>
     <p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
@@ -27,10 +29,8 @@
         <td th:text="${ticket.customer.phoneNumber}"></td>
         <td th:text="${ticket.itemName}"></td>
         <td th:text="${ticket.id}"></td>
-        <!--<td th:text="${cheese.description}"></td>-->
-        <!--<td th:text="${cheese.category.name}"></td>-->
-        <!--<td><a th:href="'/cheese/edit/' + ${cheese.id}" th:text="Edit" >></a></td>-->
-        <!--<td th:text="${cheese.type.name}"></td>-->
+        <td th:text="${ticket.time}"></td>
+        <td th:text="${ticket.updated}"></td>
     </tr>
 
 </table>

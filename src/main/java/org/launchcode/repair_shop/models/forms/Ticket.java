@@ -32,10 +32,12 @@ public class Ticket {
 
     private boolean open;
 
+    private String time;
+
+    private String updated;
 
 
-
-    public Ticket(int id, String itemName, String itemDescription, String itemIssue, ArrayList itemNotes, boolean open) {
+    public Ticket(int id, String itemName, String itemDescription, String itemIssue, ArrayList itemNotes, boolean open, String time) {
     }
 
 
@@ -96,5 +98,21 @@ public class Ticket {
 
     public void setOpen(boolean open) {
         this.open = open;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(String updated) {
+        this.updated = updated;
     }
 }

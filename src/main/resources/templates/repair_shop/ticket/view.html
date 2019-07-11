@@ -14,9 +14,10 @@
     </div>
 </form>
 
+<p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
 <table class="table" th:if="${tickets}">
 
-    <tr>
+    <tr th:if="${tickets} and ${tickets.size()}">
         <th>Open Tickets</th>
         <th>Customer Name</th>
         <th>Phone</th>
@@ -25,7 +26,7 @@
         <th>Date Created</th>
         <th>Last Updated</th>
     </tr>
-    <p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
+
     <tr th:each="ticket : ${tickets}">
         <td><a th:href="'/repair_shop/ticket/view/' + ${ticket.id}" th:text="View" ></a></td>
         <td th:text="${ticket.customer.lastName} + ', ' +${ticket.customer.firstName}"></td>
@@ -35,7 +36,7 @@
         <td th:text="${ticket.time}"></td>
         <td th:text="${ticket.updated}"></td>
     </tr>
-    <tr th:if="${closedTickets}">
+    <tr th:if="${closedTickets} and ${closedTickets.size()}">
         <th>Closed Tickets</th>
         <th>Customer Name</th>
         <th>Phone</th>

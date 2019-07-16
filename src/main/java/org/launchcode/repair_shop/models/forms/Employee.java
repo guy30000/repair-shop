@@ -3,6 +3,9 @@ package org.launchcode.repair_shop.models.forms;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
@@ -11,24 +14,46 @@ public class Employee {
     @GeneratedValue
     private int id;
 
-    private String agentName;
+    @NotNull
+    private String agentFirstName;
 
-    private String address;
+    @NotNull
+    private String agentLastName;
+
+    @NotNull
+    private String agentMiddleInitial;
+
+    @NotNull
+    private String streetAddress;
+
+    @NotNull
+    private String cityStateAddress;
+
+    @NotNull
+    private String zipAddress;
 
     private String phone;
 
     private String ssn;
 
+    @NotNull
+    @DecimalMin(value = "7.25")
+    @DecimalMax(value = "40.00")
     private Double rate;
 
+    @NotNull
     private int pin;
 
     private boolean active;
 
-    public Employee(int id, String agentName, String address, String phone, String ssn, Double rate, int pin, boolean active) {
+    public Employee(int id, String agentFirstName, String agentLastName, String agentMiddleInitial, String streetAddress,String cityStateAddress,String zipAddress, String phone, String ssn, Double rate, int pin, boolean active) {
         this.id = id;
-        this.agentName = agentName;
-        this.address = address;
+        this.agentFirstName = agentFirstName;
+        this.agentLastName = agentLastName;
+        this.agentMiddleInitial = agentMiddleInitial;
+        this.streetAddress = streetAddress;
+        this.cityStateAddress = cityStateAddress;
+        this.zipAddress = zipAddress;
         this.phone = phone;
         this.ssn = ssn;
         this.rate = rate;
@@ -47,20 +72,52 @@ public class Employee {
         this.id = id;
     }
 
-    public String getAgentName() {
-        return agentName;
+    public String getAgentFirstName() {
+        return agentFirstName;
     }
 
-    public void setAgentName(String agentName) {
-        this.agentName = agentName;
+    public void setAgentFirstName(String agentFirstName) {
+        this.agentFirstName = agentFirstName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAgentLastName() {
+        return agentLastName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAgentLastName(String agentLastName) {
+        this.agentLastName = agentLastName;
+    }
+
+    public String getAgentMiddleInitial() {
+        return agentMiddleInitial;
+    }
+
+    public void setAgentMiddleInitial(String agentMiddleInitial) {
+        this.agentMiddleInitial = agentMiddleInitial;
+    }
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    public String getCityStateAddress() {
+        return cityStateAddress;
+    }
+
+    public void setCityStateAddress(String cityStateAddress) {
+        this.cityStateAddress = cityStateAddress;
+    }
+
+    public String getZipAddress() {
+        return zipAddress;
+    }
+
+    public void setZipAddress(String zipAddress) {
+        this.zipAddress = zipAddress;
     }
 
     public String getPhone() {

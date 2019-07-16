@@ -10,9 +10,13 @@
     <div class="form-group">
         <label th:for="ticketsearch">Search by Customer Name, Phone number, or Ticket Number</label>
         <input class="form-control" field="ticketsearch" name="ticketsearch"/>
-        <input type="submit" name="search" value="Search"/>
+        <input type="submit" name="search" value="Search Tickets"/>
+        <input type="radio" th:for="tickOpen" name="tickOpen" value="true" /> Open
+        <input type="radio" th:for="tickOpen" name="tickOpen" value="false"/> Closed
+        <input type="radio" th:for="tickOpen" name="tickOpen" value="both"/> Both
     </div>
 </form>
+
 
 <p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
 <table class="table" th:if="${tickets}">

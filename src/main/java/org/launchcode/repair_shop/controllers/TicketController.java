@@ -90,7 +90,7 @@ public class TicketController {
     }
 
     @RequestMapping(value = "view", method = RequestMethod.POST)
-    public String viewTickets (Model model, @RequestParam(required = false) String ticketsearch) {
+    public String viewTickets (Model model, @RequestParam(required = false) String ticketsearch, @RequestParam(required = false) String tickOpen) {
         model.addAttribute("title", "View Customers");
         ArrayList<Ticket> openTickets = new ArrayList<>();
         ArrayList<Ticket> closedTickets = new ArrayList<>();
@@ -107,12 +107,35 @@ public class TicketController {
                         || (ticket.getCustomer().getPhoneNumber().contains(ticketsearch))
                         || (tickSrchAsId == (ticket.getId()))  //still working on getting lookup id working Trying to make it less than an if statement
                         ) {
-                    if (ticket.isOpen() == true) {
-                        openTickets.add(ticket);
+                        if (ticket.isOpen() == true) {
+                            openTickets.add(ticket);
+                        }
+                        if (ticket.isOpen() != true) {
+                            closedTickets.add(ticket);
+                        }
+//                    if (tickOpen.equals("false")) {
+//                        System.out.println("    Search open ------   " +tickOpen );
+//                    }
+                    if (tickOpen != "true") {
+                        System.out.println("    != true  ticket is closed   " +tickOpen );
                     }
-                    if (ticket.isOpen() != true) {
-                        closedTickets.add(ticket);
+                    if (tickOpen != "false") {
+                        System.out.println("    != false  ticket is open ----   " +tickOpen );
                     }
+                    if (tickOpen == "true") {
+                        System.out.println("    == true  ticket is closed   " +tickOpen );
+                    }
+                    if (tickOpen == "false") {
+                        System.out.println("    == false  ticket is open ----   " +tickOpen );
+                    }
+//                    if (tickOpen.contains("true")) {
+//                        System.out.println("    contains true  ticket is closed   " +tickOpen );
+//                    }
+//                    if (tickOpen.contains("false")) {
+//                        System.out.println("    contains false  ticket is open ----   " +tickOpen );
+//                    }
+
+
                     model.addAttribute("tickets", openTickets);
                     model.addAttribute("closedTickets", closedTickets);
                }

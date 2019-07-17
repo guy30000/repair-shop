@@ -18,7 +18,7 @@
 </form>
 
 
-<p th:unless="${tickets} and ${tickets.size()}">No open tickets</p>
+<h4 th:unless="${tickets} and ${tickets.size()}">No open tickets</h4>
 <table class="table" th:if="${tickets}">
 
     <tr th:if="${tickets} and ${tickets.size()}">
@@ -40,6 +40,9 @@
         <td th:text="${ticket.time}"></td>
         <td th:text="${ticket.updated}"></td>
     </tr>
+</table>
+
+    <table class="table" th:if="${closedTickets}">
     <tr th:if="${closedTickets} and ${closedTickets.size()}">
         <th>Closed Tickets</th>
         <th>Customer Name</th>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(value = "repair_shop/staff")
@@ -44,6 +45,20 @@ public class EmployeeController {
         return "repair_shop/staff/index";
     }
 ///////////////////view edit
+    @RequestMapping(value = "view", method = RequestMethod.GET)
+    private String displayViewEmployee (Model model){
+        model.addAttribute("title", "View Employees");
+        ArrayList<Employee> activeEmp = new ArrayList<>();
+        for (Employee singleEmp : employeeDao.findAll()) {
+            if (singleEmp.isActive() == true){
+                activeEmp.add(singleEmp);
+            }
+        }
+        model.addAttribute("staff", activeEmp);
+        return"repair_shop/staff/view";
+}
+
+
 
 //    Emplaye creation page
 //      Emplayee edit

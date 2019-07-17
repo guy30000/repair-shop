@@ -113,33 +113,17 @@ public class TicketController {
                         if (ticket.isOpen() != true) {
                             closedTickets.add(ticket);
                         }
-//                    if (tickOpen.equals("false")) {
-//                        System.out.println("    Search open ------   " +tickOpen );
-//                    }
-                    if (tickOpen != "true") {
-                        System.out.println("    != true  ticket is closed   " +tickOpen );
-                    }
-                    if (tickOpen != "false") {
-                        System.out.println("    != false  ticket is open ----   " +tickOpen );
-                    }
-                    if (tickOpen == "true") {
-                        System.out.println("    == true  ticket is closed   " +tickOpen );
-                    }
-                    if (tickOpen == "false") {
-                        System.out.println("    == false  ticket is open ----   " +tickOpen );
-                    }
-//                    if (tickOpen.contains("true")) {
-//                        System.out.println("    contains true  ticket is closed   " +tickOpen );
-//                    }
-//                    if (tickOpen.contains("false")) {
-//                        System.out.println("    contains false  ticket is open ----   " +tickOpen );
-//                    }
 
 
-                    model.addAttribute("tickets", openTickets);
-                    model.addAttribute("closedTickets", closedTickets);
                }
             }
+            if (!"false".equals(tickOpen)) { //passes open tickets
+                model.addAttribute("tickets", openTickets);
+            }
+            if (!"true".equals(tickOpen)) { //passes closed tickets
+                model.addAttribute("closedTickets", closedTickets);
+            }
+
         }
         return "repair_shop/ticket/view";
     }

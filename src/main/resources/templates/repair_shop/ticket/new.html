@@ -34,8 +34,8 @@
         <input class="form-control" th:field="*{itemNotes}" />
         <span th:errors="*{itemNotes}" class="error"></span>
     </div>
-    <input type="hidden" name="id" th:value="${ticket.id}" />
-    <input type="hidden" name="customer" th:value="${cx.id}" />
+    <input type="hidden" name="id" th:value="*{id}" />
+    <input type="hidden" name="customer" th:if="${cx.id}" th:value="${cx.id}" />
     <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
 
 </form>

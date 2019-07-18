@@ -2,7 +2,9 @@ package org.launchcode.repair_shop.controllers;
 
 import org.launchcode.repair_shop.models.data.PeopleDao;
 import org.launchcode.repair_shop.models.data.PeopleData;
+import org.launchcode.repair_shop.models.data.TicketDao;
 import org.launchcode.repair_shop.models.forms.NewPeople;
+import org.launchcode.repair_shop.models.forms.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ public class PeopleController {
 
     @Autowired
     private PeopleDao peopleDao;
+
+    private TicketDao ticketDao;
 
     @RequestMapping(value = "")
     public String index (Model model){
@@ -80,17 +84,12 @@ public class PeopleController {
 //        }                                 // end search function experiment
         return "repair_shop/people/view";
     }
-
+////Edit-view
     @RequestMapping(value = "view/{cxId}", method = RequestMethod.GET)
     public String displaySingeViewCx (Model model, @PathVariable int cxId){
-        //model.addAttribute("title", "View Customers");
-        //model.addAttribute("cxs", peopleDao.findOne(cxId));
-
         model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
         model.addAttribute("newPeople", peopleDao.findOne(cxId));
         model.addAttribute("buttonName", "Update");
-
-        System.out.println(cxId + "              ddddddddd");
         return "repair_shop/people/newCX";
     }
 
@@ -103,14 +102,22 @@ public class PeopleController {
 
            return "repair_shop/people/newCX";
        }
-
-        newpeople.setId(cxId);
+//Added the arraylist and for statements as editing customer info seemed to remove the customer id from tickets.
+        //...but currently not fucntioning
+       ArrayList<Ticket> reSetCustomerAssignedTicket = new ArrayList<>();
+       for (Ticket ticket : ticketDao.findAll())
+           if (cxId == ticket.getId()) {
+               reSetCustomerAssignedTicket.add(ticket);
+           }
         peopleDao.save(newpeople);
-        model.addAttribute("title", "View Customers");
-        model.addAttribute("cxs", peopleDao.findAll());
+       for (Ticket ticket : reSetCustomerAssignedTicket){
+           ticket.setCustomer(peopleDao.findOne(cxId));
+       }
+//        model.addAttribute("title", "View Customers");
+//        model.addAttribute("cxs", peopleDao.findAll());
         model.addAttribute("newPeople", peopleDao.findOne(cxId));
         model.addAttribute("buttonName", "Update");
-        return "repair_shop/people/newCX";
+        return "redirect:repair_shop/people/view";
     }
 
 

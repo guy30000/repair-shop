@@ -22,6 +22,7 @@ public class PeopleController {
     @Autowired
     private PeopleDao peopleDao;
 
+    @Autowired
     private TicketDao ticketDao;
 
     @RequestMapping(value = "")
@@ -97,27 +98,20 @@ public class PeopleController {
     public String processViewEdit(Model model, @ModelAttribute @Valid NewPeople newpeople, Errors errors, @PathVariable int cxId, @RequestParam(required = false) String peoplesearch) {
        if (errors.hasErrors()) {
            model.addAttribute("title", "View/Edit " + peopleDao.findOne(cxId).getLastName() +"," + peopleDao.findOne(cxId).getFirstName());
-           //model.addAttribute("newPeople", peopleDao.findOne(cxId));
            model.addAttribute("buttonName", "Update");
-
            return "repair_shop/people/newCX";
        }
-//Added the arraylist and for statements as editing customer info seemed to remove the customer id from tickets.
-        //...but currently not fucntioning
-       ArrayList<Ticket> reSetCustomerAssignedTicket = new ArrayList<>();
-       for (Ticket ticket : ticketDao.findAll())
-           if (cxId == ticket.getId()) {
-               reSetCustomerAssignedTicket.add(ticket);
-           }
-        peopleDao.save(newpeople);
-       for (Ticket ticket : reSetCustomerAssignedTicket){
-           ticket.setCustomer(peopleDao.findOne(cxId));
-       }
-//        model.addAttribute("title", "View Customers");
-//        model.addAttribute("cxs", peopleDao.findAll());
+       NewPeople editedCx = peopleDao.findOne(cxId); //Saving "newpeople" directly loses the associated tickets.
+        editedCx.setFirstName(newpeople.getFirstName());
+        editedCx.setLastName(newpeople.getLastName());
+        editedCx.setMiddleInitial(newpeople.getMiddleInitial());
+        editedCx.setEmail(newpeople.getEmail());
+        editedCx.setPhoneNumber(newpeople.getPhoneNumber());
+       peopleDao.save(editedCx);
+
         model.addAttribute("newPeople", peopleDao.findOne(cxId));
         model.addAttribute("buttonName", "Update");
-        return "redirect:repair_shop/people/view";
+        return "redirect:/repair_shop/people/view";
     }
 
 

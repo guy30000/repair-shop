@@ -66,6 +66,7 @@ public class TicketController {
         ticket.setUpdated("No Updates");
         ticket.getItemNotes().add(" +Ticket created+ "  + timestamp);
         ticket.setTime(timestamp);
+        //ticket.setCustomer(peopleDao.findOne(8)); /////////delet this
         ticketDao.save(ticket);
 
         return "redirect:/repair_shop/ticket/view/" + ticket.getId();

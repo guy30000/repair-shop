@@ -32,7 +32,8 @@
         <input class="form-control" th:field="*{phoneNumber}" />
         <span th:errors="*{phoneNumber}" class="error"></span>
     </div>
-    <input type="hidden" name="id" th:value="*{id}" />
+    <!--<input type="text" name="id" th:value="*{id}" />-->
+    <!--<input type="text" name="tickets" th:value="*{tickets}" />-->
     <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
 
 </form>

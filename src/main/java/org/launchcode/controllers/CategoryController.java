@@ -40,7 +40,9 @@ public class CategoryController {
         //model.addAttribute("categories", categoryDao.findAll());
         model.addAttribute(new Category());
         model.addAttribute("title", "Add Category");
-
+//        Category testcat= categoryDao.findOne(10);   //this was for a test
+//        testcat.setName("test");
+//        categoryDao.save(testcat);
 
         return "category/add";
     }

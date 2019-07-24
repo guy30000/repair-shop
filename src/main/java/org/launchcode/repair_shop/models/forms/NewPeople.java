@@ -32,7 +32,8 @@ public class NewPeople {
 
     @OneToMany
     @JoinColumn(name ="customer_id")
-    private List<Ticket> tickets = new ArrayList<>();
+//    private List<Ticket> tickets = new ArrayList<>();
+    private List<Ticket> tickets = new ArrayList<>();;
 
     @NotNull
     @Size(min=10,max=10, message = "Enter 10 digit in 1234567890 format")
@@ -44,7 +45,10 @@ public class NewPeople {
         this.middleInitial = middleInitial;
         this.email = email;
         this.phoneNumber = phoneNumber;
+
     }
+
+//    public void addTicket(Ticket newTicket){ tickets.add(newTicket);}
 
     public NewPeople(){}
 
@@ -94,5 +98,13 @@ public class NewPeople {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 }

@@ -37,7 +37,7 @@
     <input type="hidden" name="id" th:value="*{id}" />
     <input type="hidden" name="customer" th:if="${cx.id}" th:value="${cx.id}" />
     <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
-
+    <p id="demo"></p>
 </form>
 <a onclick="goBack()">Go Back</a>
 <script>
@@ -46,6 +46,7 @@ function goBack() {
 }
 function myFunction() {
   confirm("Create Ticket");
+
 }
 
 

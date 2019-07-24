@@ -1,11 +1,10 @@
 package org.launchcode.repair_shop.models.forms;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Employee {
@@ -42,11 +41,13 @@ public class Employee {
     private Double rate;
 
     @NotNull
-    private int pin;
+    @Column(unique=true)
+    @Size(min=4,max=20, message = "PIN must be between 4 and 20 characters")
+    private String pin;
 
     private boolean active;
 
-    public Employee(int id, String agentFirstName, String agentLastName, String agentMiddleInitial, String streetAddress,String cityStateAddress,String zipAddress, String phone, String ssn, Double rate, int pin, boolean active) {
+    public Employee(int id, String agentFirstName, String agentLastName, String agentMiddleInitial, String streetAddress,String cityStateAddress,String zipAddress, String phone, String ssn, Double rate, String pin, boolean active) {
         this.id = id;
         this.agentFirstName = agentFirstName;
         this.agentLastName = agentLastName;
@@ -144,11 +145,11 @@ public class Employee {
         this.rate = rate;
     }
 
-    public int getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(int pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 

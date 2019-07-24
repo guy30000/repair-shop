@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -36,8 +33,13 @@ public class EmployeeController {
         return "repair_shop/staff/ect";
     }
     @RequestMapping(value = "ect", method = RequestMethod.POST)
-    private String processECT (Model model, @Valid Employee employee, Errors errors) {
-        if (errors.hasErrors()){
+    private String processECT (Model model, @Valid Employee employee, Errors errors, @RequestParam String verifyPin) {
+
+        if (errors.hasErrors() || !verifyPin.equals(employee.getPin())){
+            if (!verifyPin.equals(employee.getPin())) {
+                System.out.println("Passwords no match" + verifyPin +"-VpwsP-"+ employee.getPin() );
+                model.addAttribute("error", "PINs do not match");
+            }
             model.addAttribute("title", "Employee Creation Tool");
             model.addAttribute("buttonName", "Create new employee");
             return "repair_shop/staff/ect";
@@ -70,10 +72,14 @@ public class EmployeeController {
         return "repair_shop/staff/ect";
     }
     @RequestMapping(value = "view/{agentId}", method = RequestMethod.POST)
-    private String processViewEmployeeById (Model model, @PathVariable int agentId, @Valid @ModelAttribute Employee employee, Errors errors){
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "asdfasfd Employees");
+    private String processViewEmployeeById (Model model, @PathVariable int agentId, @Valid @ModelAttribute Employee employee, Errors errors, @RequestParam String verifyPin){
+        if (errors.hasErrors() || !verifyPin.equals(employee.getPin())){
+            if (!verifyPin.equals(employee.getPin())) {
+                System.out.println("Passwords no match" + verifyPin +"-VpwsP-"+ employee.getPin() );
+                model.addAttribute("error", "PINs do not match");
+            }
             model.addAttribute("employee", employeeDao.findOne(agentId));
+            model.addAttribute("title", "View " + employeeDao.findOne(agentId).getAgentLastName() + ", " + employeeDao.findOne(agentId).getAgentFirstName());
             model.addAttribute("buttonName", "Save Changes");
             return "repair_shop/staff/ect";
         }

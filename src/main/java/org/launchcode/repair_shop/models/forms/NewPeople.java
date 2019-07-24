@@ -39,12 +39,14 @@ public class NewPeople {
     @Size(min=10,max=10, message = "Enter 10 digit in 1234567890 format")
     private String phoneNumber;
 
+
     public NewPeople(int id, String firstName, String lastName, String middleInitial, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleInitial = middleInitial;
         this.email = email;
         this.phoneNumber = phoneNumber;
+
 
     }
 
@@ -107,4 +109,6 @@ public class NewPeople {
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+
+
 }

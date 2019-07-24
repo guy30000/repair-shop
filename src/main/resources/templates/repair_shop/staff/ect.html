@@ -50,6 +50,19 @@
         <span th:errors="*{ssn}" class="error"></span>
     </div>
     <div class="form-group">
+        <label th:for="pin">PIN</label> <a th:if="${error}" class="error" th:text="${error}" />
+        <input class="form-control" th:field="*{pin}" />
+        <span th:errors="*{pin}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="verifyPin">Verify PIN</label>
+        <input class="form-control" id="verifyPin" name="verifyPin"  th:value="*{pin}"/>
+
+    <!--<label for="verifypw-field">Verify Password</label>-->
+    <!--<input class="form-control" id="verifypw-field" type="password" name="verifypw" />-->
+
+    </div>
+    <div class="form-group">
         <label th:for="rate">Pay rate (XX.xx)</label>
         <input class="form-control" th:field="*{rate}" />
         <span th:errors="*{rate}" class="error"></span>

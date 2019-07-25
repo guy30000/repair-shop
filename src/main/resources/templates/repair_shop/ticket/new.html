@@ -13,7 +13,7 @@
 </address>
 
 
-<form method="post" style="max-width:600px;" th:object="${ticket}">
+<form method="post" style="max-width:600px;" th:object="${ticket}" id="ticketForm">
     <div class="form-group">
         <label th:for="firstName">Item for repair (Required)</label>
         <input class="form-control" th:field="*{itemName}" />
@@ -36,7 +36,8 @@
     </div>
     <input type="hidden" name="id" th:value="*{id}" />
     <input type="hidden" name="customer" th:if="${cx.id}" th:value="${cx.id}" />
-    <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
+    <input id="cancel" class="btn btn-danger btn-block" th:value="${buttonName}" onclick="myFunction()" />
+
     <p id="demo"></p>
 </form>
 <a onclick="goBack()">Go Back</a>
@@ -45,11 +46,20 @@ function goBack() {
   window.history.back();
 }
 function myFunction() {
-  confirm("Create Ticket");
+var retVal = confirm("Creat Ticket?");
+    if (retVal == true)
+    {
+        $("#ticketForm").submit();
+        return true;
+    }
+    else
+    {
+        alert("Submission canceled");
+        CausesValidation="False"
+        return false;
+    }
 
 }
-
-
 </script>
 
 </body>

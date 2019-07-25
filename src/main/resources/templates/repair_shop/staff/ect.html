@@ -8,7 +8,7 @@
 
 
 
-<form method="post" style="max-width:600px;" th:object="${employee}">
+<form method="post" style="max-width:600px;" th:object="${employee}" id="employeeForm">
     <div class="form-group">
         <label th:for="agentFirstName">First Name</label>
         <input class="form-control" th:field="*{agentFirstName}" />
@@ -68,10 +68,10 @@
         <span th:errors="*{rate}" class="error"></span>
     </div>
     <input type="hidden" name="id" th:value="*{id}" />
-    <input type="submit" th:value="${buttonName}" onclick="myFunction()" />
 
     <input type="radio" th:for="active" th:field="*{active}" name="active" value="true" /> Active
     <input type="radio" th:for="active" th:field="*{active}"  name="active" value="false"/> Inactive
+    <input id="cancel" class="btn btn-danger btn-block" th:value="${buttonName}" onclick="myFunction()" />
 
 </form>
 <a onclick="goBack()">Go Back</a>
@@ -80,7 +80,18 @@ function goBack() {
   window.history.back();
 }
 function myFunction() {
-  confirm("Save Employee");
+var retVal = confirm("Save Employee?");
+    if (retVal == true)
+    {
+        $("#employeeForm").submit();
+        return true;
+    }
+    else
+    {
+        alert("Submission canceled");
+        CausesValidation="False"
+        return false;
+    }
 }
 
 

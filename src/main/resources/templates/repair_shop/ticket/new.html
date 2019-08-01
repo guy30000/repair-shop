@@ -15,41 +15,75 @@
 
 <form method="post" style="max-width:600px;" th:object="${ticket}" id="ticketForm">
     <div class="form-group">
-        <label th:for="firstName">Item for repair (Required)</label>
+        <label th:for="itemName">Item for repair (Required)</label>
         <input class="form-control" th:field="*{itemName}" />
-        <span th:errors="*{itemName}" class="error"></span>
+        <span th:errors="*{itemName}" class="alert-danger"></span>
     </div>
     <div class="form-group">
-        <label th:for="lastName">Description of item</label>
+        <label th:for="itemDescription">Description of item</label>
         <input class="form-control" th:field="*{itemDescription}" />
-        <span th:errors="*{itemDescription}" class="error"></span>
+        <span th:errors="*{itemDescription}" class="alert-danger"></span>
     </div>
     <div class="form-group">
-        <label th:for="middleInitial">Reason for repair (Required)</label>
+        <label th:for="itemIssue">Reason for repair (Required)</label>
         <input class="form-control" th:field="*{itemIssue}" />
-        <span th:errors="*{itemIssue}" class="error"></span>
+        <span th:errors="*{itemIssue}" class="alert-danger"></span>
     </div>
     <div class="form-group">
-        <label th:for="email">Notes</label>
+        <label th:for="itemNotes">Notes</label>
         <input class="form-control" th:field="*{itemNotes}" />
-        <span th:errors="*{itemNotes}" class="error"></span>
+        <span th:errors="*{itemNotes}" class="alert-danger"></span>
     </div>
+
     <input type="hidden" name="id" th:value="*{id}" />
     <input type="hidden" name="customer" th:if="${cx.id}" th:value="${cx.id}" />
-    <input id="cancel" class="btn btn-danger btn-block" th:value="${buttonName}" onclick="myFunction()" />
 
-    <p id="demo"></p>
+        <form method="post" style="max-width:600px;" object="employee" id="agentForm">
+            <div class="form-group">
+                <label th:for="agentId">Agent Id</label>
+                <!--<span th:if="${agentError}" errors=agentError class="error"></span>-->
+                <span th:if="${agentError}" class="alert-danger" th:text="${agentError}"></span>
+                <input class="form-control" field="agentId" name="agentId" />
+            </div>
+            <div class="form-group">
+                <label th:for="agentPin">Agent PIN</label>
+                <input class="form-control" type="password" field="agentPin" name="agentPin" />
+            </div>
+        </form>
+    <input id="cancel" class="btn btn-danger btn-block" th:value="${buttonName}" onclick="myFunction()" />
 </form>
+
+
+<!--<div class="form-group">-->
+<!--<label th:for="agentId">Notes</label>-->
+<!--<input class="form-control" th:field="${agentId}" />-->
+<!--<span th:errors="${agentId}" class="error"></span>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label th:for="AgentPin">Notes</label>-->
+<!--<input class="form-control" type="password" th:field="${agentPin}" />-->
+<!--<span th:errors="${agentPin}" class="error"></span>-->
+<!--</div>-->
+
+
+
+
+
+
 <a onclick="goBack()">Go Back</a>
 <script>
 function goBack() {
   window.history.back();
 }
-function myFunction() {
+function myFunction(method='post') {
 var retVal = confirm("Save Ticket?");
     if (retVal == true)
     {
-        $("#ticketForm").submit();
+
+
+
+    $("#ticketForm").submit();
+    $("#agentForm").submit();
         return true;
     }
     else

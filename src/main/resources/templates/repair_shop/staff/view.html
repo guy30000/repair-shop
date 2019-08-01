@@ -24,12 +24,14 @@
         <th></th>
         <th>Agent Name</th>
         <th>Phone</th>
+        <th>Id</th>
     </tr>
 
     <tr th:each="employee : ${staff}">
         <td><a th:href="'/repair_shop/staff/view/' + ${employee.id}" th:text="View" ></a></td>
         <td th:text="${employee.agentLastName} + ', ' +${employee.agentFirstName}"></td>
         <td th:text="${employee.phone}"></td>
+        <td th:text="${employee.id}"></td>
     </tr>
 </table>
 
@@ -39,11 +41,13 @@
         <th></th>
         <th>Agent Name</th>
         <th>Phone</th>
+        <th>Id</th>
     </tr>
     <tr th:each="employee : ${inactiveStaff}">
         <td><a th:href="'/repair_shop/staff/view/' + ${employee.id}" th:text="View" ></a></td>
         <td th:text="${employee.agentLastName} + ', ' +${employee.agentFirstName}"></td>
         <td th:text="${employee.phone}"></td>
+        <td th:text="${employee.id}"></td>
     </tr>
 </table>
 

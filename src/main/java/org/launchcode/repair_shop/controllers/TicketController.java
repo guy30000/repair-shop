@@ -1,7 +1,9 @@
 package org.launchcode.repair_shop.controllers;
 
+import org.launchcode.repair_shop.models.data.EmployeeDao;
 import org.launchcode.repair_shop.models.data.PeopleDao;
 import org.launchcode.repair_shop.models.data.TicketDao;
+import org.launchcode.repair_shop.models.forms.Employee;
 import org.launchcode.repair_shop.models.forms.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.InvalidParameterException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +31,9 @@ public class TicketController {
 
     @Autowired
     private PeopleDao peopleDao;
+
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @RequestMapping(value = "")
     public String index (Model model){
@@ -44,19 +52,32 @@ public class TicketController {
         model.addAttribute("title", "New Ticket");
         model.addAttribute("buttonName", "Create Ticket");
         model.addAttribute("cx", peopleDao.findOne(cxId));
-        System.out.println("             Printing displayNewTicketForm   ");
+        model.addAttribute("agent", employeeDao.findAll());  //added this to get employee info that I may need
         model.addAttribute(new Ticket());
         return "repair_shop/ticket/new";
     }
 
     @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)
-    public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId){
+    public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId, @ModelAttribute Employee employee, @RequestParam(required = false) int agentId, @RequestParam(required = false) String agentPin){
+        Employee agent;
+        try {
 
-        if (errors.hasErrors()) {
+             agent = employeeDao.findOne(agentId);
+            if (agent == null){
+                throw new RuntimeException();
+            }
+        } catch (RuntimeException e) {
+             agent = employeeDao.findOne(1);
+             agentPin = "failedpin999998888877777";  //Resets pin input to be outside of pin possibilites.
+        }
+        if (errors.hasErrors() || !agent.getPin().equals(agentPin)) {
+            if (!agent.getPin().equals(agentPin)){
+                model.addAttribute("agentError", "Agent ID or PIN code in valid");
+            }
             model.addAttribute("title", "New Ticket");
             model.addAttribute("buttonName", "Create Ticket");
             model.addAttribute("cx", peopleDao.findOne(cxId));
-
+            model.addAttribute("agent", employeeDao.findAll());  //added this to get employee info that I may need
             return "repair_shop/ticket/new";
         }
         Date date = new Date();
@@ -64,9 +85,9 @@ public class TicketController {
         ticket.setTime(timestamp);
         ticket.setOpen(true);
         ticket.setUpdated("No Updates");
-        ticket.getItemNotes().add(" +Ticket created+ "  + timestamp);
+        ticket.getItemNotes().add(" +Ticket created+ "  + timestamp + "      Created By " + agent.getAgentLastName() + "," +agent.getAgentFirstName() + " ID: " + agent.getId());
         ticket.setTime(timestamp);
-        //ticket.setCustomer(peopleDao.findOne(8)); /////////delet this
+
         ticketDao.save(ticket);
 
         return "redirect:/repair_shop/ticket/view/" + ticket.getId();

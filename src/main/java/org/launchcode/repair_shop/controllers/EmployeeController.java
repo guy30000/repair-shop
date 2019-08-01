@@ -77,6 +77,7 @@ public class EmployeeController {
             if (!verifyPin.equals(employee.getPin())) {
                 System.out.println("Passwords no match" + verifyPin +"-VpwsP-"+ employee.getPin() );
                 model.addAttribute("error", "PINs do not match");
+                System.out.println("  PIns issue ");
             }
             model.addAttribute("employee", employeeDao.findOne(agentId));
             model.addAttribute("title", "View " + employeeDao.findOne(agentId).getAgentLastName() + ", " + employeeDao.findOne(agentId).getAgentFirstName());

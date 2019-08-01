@@ -41,7 +41,7 @@ public class Employee {
     private Double rate;
 
     @NotNull
-    @Column(unique=true)
+//    @Column(name = "PIN", unique=true)
     @Size(min=4,max=20, message = "PIN must be between 4 and 20 characters")
     private String pin;
 

@@ -7,17 +7,17 @@
 <nav th:replace="repair_shop/fragmentsRS :: title"></nav>
 
 <form method="post" style="max-width:600px;" th:object="${newPeople}" id="peopleForm">
-    <div class="form-group">
+    <div class="form-group" style="float:left;">
         <label th:for="firstName">First Name (required)</label>
         <input class="form-control" th:field="*{firstName}" />
         <span th:errors="*{firstName}" class="error"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="float:right;">
         <label th:for="lastName">Last Name (required)</label>
         <input class="form-control" th:field="*{lastName}" />
         <span th:errors="*{lastName}" class="error"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="float:middle;">
         <label th:for="middleInitial">Middle Initial</label>
         <input class="form-control" th:field="*{middleInitial}" />
         <span th:errors="*{middleInitial}" class="error"></span>

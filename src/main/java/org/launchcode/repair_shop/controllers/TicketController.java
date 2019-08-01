@@ -58,7 +58,9 @@ public class TicketController {
     }
 
     @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)
-    public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId, @ModelAttribute Employee employee, @RequestParam(required = false) int agentId, @RequestParam(required = false) String agentPin){
+    public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId,
+                                        @ModelAttribute Employee employee, @RequestParam(required = false) int agentId,
+                                        @RequestParam(required = false) String agentPin){
         Employee agent;
         try {
 
@@ -85,7 +87,7 @@ public class TicketController {
         ticket.setTime(timestamp);
         ticket.setOpen(true);
         ticket.setUpdated("No Updates");
-        ticket.getItemNotes().add(" +Ticket created+ "  + timestamp + "      Created By " + agent.getAgentLastName() + "," +agent.getAgentFirstName() + " ID: " + agent.getId());
+        ticket.getItemNotes().add(" +Ticket created+ "  + timestamp + "      Created By: " + agent.getAgentLastName() + ", " + agent.getAgentFirstName() + " ID: " + agent.getId());
         ticket.setTime(timestamp);
 
         ticketDao.save(ticket);
@@ -159,7 +161,8 @@ public class TicketController {
     }
 
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)
-    public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote, @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx){
+    public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote,
+                                              @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx){
         Ticket order = ticketDao.findOne(ticketId);
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);

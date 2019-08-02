@@ -57,7 +57,7 @@ public class TicketController {
         return "repair_shop/ticket/new";
     }
 
-    @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)
+    @RequestMapping(value = "new/{cxId}", method = RequestMethod.POST)  //-create ticket
     public String processNewTicketForm (Model model, @ModelAttribute @Valid Ticket ticket, Errors errors, @PathVariable int cxId,
                                         @ModelAttribute Employee employee, @RequestParam(required = false) int agentId,
                                         @RequestParam(required = false) String agentPin){
@@ -79,7 +79,6 @@ public class TicketController {
             model.addAttribute("title", "New Ticket");
             model.addAttribute("buttonName", "Create Ticket");
             model.addAttribute("cx", peopleDao.findOne(cxId));
-            model.addAttribute("agent", employeeDao.findAll());  //added this to get employee info that I may need
             return "repair_shop/ticket/new";
         }
         Date date = new Date();
@@ -152,7 +151,7 @@ public class TicketController {
         return "repair_shop/ticket/view";
     }
 
-    @RequestMapping(value = "view/{ticketId}", method = RequestMethod.GET)
+    @RequestMapping(value = "view/{ticketId}", method = RequestMethod.GET) //-display/add note to single ticket
     public String displaySingleTicket (Model model, @PathVariable int ticketId){
         Ticket order = ticketDao.findOne(ticketId);
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
@@ -160,9 +159,30 @@ public class TicketController {
         return "repair_shop/ticket/order";
     }
 
-    @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)
+    @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)  //-display/process ticket note
     public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote,
-                                              @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx){
+                                              @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx,
+                                              @RequestParam(required = false) int agentId, @RequestParam(required = false) String agentPin){
+        Employee agent;  //verify agent & pin//
+        try {
+            agent = employeeDao.findOne(agentId);
+            if (agent == null){
+                throw new RuntimeException();
+            }
+        } catch (RuntimeException e) {
+            agent = employeeDao.findOne(1);
+            agentPin = "failedpin999998888877777";  //Resets pin input to be outside of pin possibilities.
+        }
+        if (!agent.getPin().equals(agentPin)) {
+            if (!agent.getPin().equals(agentPin)){
+                model.addAttribute("agentError", "Agent ID or PIN code in valid");
+            }
+            Ticket order = ticketDao.findOne(ticketId);
+            model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
+            model.addAttribute("ticket", order);
+            return "repair_shop/ticket/order";
+        }               //end verify agent & pin//
+
         Ticket order = ticketDao.findOne(ticketId);
         model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);
@@ -171,18 +191,18 @@ public class TicketController {
 
         Date date = new Date();
         String timestamp = dateFormat.format(date);
-
+        String signature = (timestamp + "      Updated By: " + agent.getAgentLastName() + ", " + agent.getAgentFirstName() + " ID: " + agent.getId());
         if (newNote != null && newNote.length() > 0) {
-            order.getItemNotes().add(newNote + " +" + timestamp);
+            order.getItemNotes().add("NOTE: " + newNote + "+ " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         if (closeticket != null) {
             order.setOpen(false);
-            order.getItemNotes().add(" +Ticket Complete+ "  + timestamp);
+            order.getItemNotes().add(" +Ticket Complete+ " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         if (contactCx != null) {
-            order.getItemNotes().add(" +Contacted Customer+ "  + timestamp);
+            order.getItemNotes().add(" +Contacted Customer+ " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         ticketDao.save(order);

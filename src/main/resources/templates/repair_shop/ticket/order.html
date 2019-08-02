@@ -24,12 +24,29 @@
         </table>
 
         <label th:for="newnote" >Add Note:</label>
+
+
+
         <input class="form-control" field="newNote" name="newNote"/>
+
+        <div>
+            <div class="form-group" style="float:left;">
+                <label th:for="agentId">Agent Id</label>
+                <span th:if="${agentError}" class="alert-danger" th:text="${agentError}"></span>
+                <input class="form-control" field="agentId" name="agentId" />
+            </div>
+            <div class="form-group" style="float:left;">
+                <label th:for="agentPin">Agent PIN</label>
+                <input class="form-control" type="password" field="agentPin" name="agentPin" />
+            </div>
+        </div>
+
+    </div>
+
         <input type="submit" name="Save Note" value="Save Note"/>
         <input type="submit" name="closeticket" value="Mark ticket as complete"/>
         <input type="submit" name="contactCx" value="Contacted Customer"/>
 
-    </div>
 
 
 </form>

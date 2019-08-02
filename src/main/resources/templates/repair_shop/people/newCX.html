@@ -7,40 +7,39 @@
 <nav th:replace="repair_shop/fragmentsRS :: title"></nav>
 
 <form method="post" style="max-width:600px;" th:object="${newPeople}" id="peopleForm">
-    <div class="form-group" style="float:left;">
+
+    <div class="form-group" style="float:left; width:250px;">
         <label th:for="firstName">First Name (required)</label>
         <input class="form-control" th:field="*{firstName}" />
         <span th:errors="*{firstName}" class="error"></span>
     </div>
-    <div class="form-group" style="float:right;">
+        <div class="form-group" style="float:left; width:100px;">
+            <label th:for="middleInitial">Middle Initial</label>
+            <input class="form-control" th:field="*{middleInitial}" />
+            <span th:errors="*{middleInitial}" class="error"></span>
+        </div>
+    <div class="form-group" style="float:left; width:250px;">
         <label th:for="lastName">Last Name (required)</label>
         <input class="form-control" th:field="*{lastName}" />
         <span th:errors="*{lastName}" class="error"></span>
     </div>
-    <div class="form-group" style="float:middle;">
-        <label th:for="middleInitial">Middle Initial</label>
-        <input class="form-control" th:field="*{middleInitial}" />
-        <span th:errors="*{middleInitial}" class="error"></span>
-    </div>
-    <div class="form-group">
+
+    <div class="form-group" style="float:left; width:400px;">
         <label th:for="email">Email</label>
         <input class="form-control" th:field="*{email}" />
         <span th:errors="*{email}" class="error"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="float:left; width:200px;">
         <label th:for="phoneNumber">Contact Number</label>
         <input class="form-control" th:field="*{phoneNumber}" />
         <span th:errors="*{phoneNumber}" class="error"></span>
     </div>
-    <!--<input type="text" name="id" th:value="*{id}" />-->
-    <!--<input type="text" name="tickets" th:value="*{tickets}" />-->
     <input id="cancel" class="btn btn-danger btn-block" th:value="${buttonName}" onclick="myFunction()" />
 
 </form>
 <a onclick="goBack()">Go Back</a> -
 
 <a th:if="${newPeople.id}" th:href="'/repair_shop/ticket/new/' + ${newPeople.id}">Start Ticket</a>
-<!--<th><a th:href="'/repair_shop/ticket/new/' + ${cx.id}" th:text="'Create Ticket Testing'"></a></th>-->
 
 
 <script> peopleForm

@@ -118,6 +118,26 @@ p.groove {border-style: groove;}
 
 /*table hover lighting  */
 tr:hover {background-color:#f5f5f5;}
+
+
+label{
+display:inline-block;
+width:200px;
+margin-right:30px;
+text-align:right;
+}
+
+input{
+
+}
+
+fieldset{
+border:none;
+width:500px;
+margin:0px auto;
+}
+
+
 </style>
 </head>
 <body>

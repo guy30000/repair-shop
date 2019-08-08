@@ -94,7 +94,7 @@ public class TicketController {
         return "redirect:/repair_shop/ticket/view/" + ticket.getId();
     }
 ////////////////View ticket
-    @RequestMapping(value = "view", method = RequestMethod.GET)
+    @RequestMapping(value = "view", method = RequestMethod.GET)   //view all tickets
     public String viewTickets (Model model){
         ArrayList<Ticket> openTickets = new ArrayList<>();
         ArrayList<Ticket> closedTickets = new ArrayList<>();
@@ -112,7 +112,7 @@ public class TicketController {
         return "repair_shop/ticket/view";
     }
 
-    @RequestMapping(value = "view", method = RequestMethod.POST)
+    @RequestMapping(value = "view", method = RequestMethod.POST)  //view all tickets
     public String viewTickets (Model model, @RequestParam(required = false) String ticketsearch, @RequestParam(required = false) String tickOpen) {
         model.addAttribute("title", "View Customers");
         ArrayList<Ticket> openTickets = new ArrayList<>();
@@ -193,23 +193,23 @@ public class TicketController {
         String timestamp = dateFormat.format(date);
         String signature = (timestamp + "      Updated By: " + agent.getAgentLastName() + ", " + agent.getAgentFirstName() + " ID: " + agent.getId());
         if (newNote != null && newNote.length() > 0) {
-            order.getItemNotes().add("NOTE: " + newNote + "+ " + "\n" + signature);
+            order.getItemNotes().add("NOTE: " + newNote + " :: " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         if (closeticket != null) {
             order.setOpen(false);
-            order.getItemNotes().add(" +Ticket Complete+ " + "\n" + signature);
+            order.getItemNotes().add(" +Ticket Complete+ :: " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         if (contactCx != null) {
-            order.getItemNotes().add(" +Contacted Customer+ " + "\n" + signature);
+            order.getItemNotes().add(" +Contacted Customer+ :: " + "\n" + signature);
             order.setUpdated(timestamp);
         }
         ticketDao.save(order);
         return "repair_shop/ticket/order";
     }
 
-    @RequestMapping(value = "view/cx/{cxId}", method = RequestMethod.GET)
+    @RequestMapping(value = "view/cx/{cxId}", method = RequestMethod.GET) //vew all tickets of a cx
     public String viewCxTickets (Model model, @PathVariable int cxId){
         model.addAttribute("title", "Tickets: " + peopleDao.findOne(cxId).getLastName() + ", " + peopleDao.findOne(cxId).getFirstName() );
         ArrayList<Ticket> openTickets = new ArrayList<>();

@@ -20,8 +20,8 @@
         <span th:errors="*{itemName}" class="alert-danger"></span>
     </div>
     <div class="form-group">
-        <label th:for="itemDescription">Description of item</label>
-        <input class="form-control" th:field="*{itemDescription}" />
+        <label th:for="itemDescription">Item description</label>
+        <textarea rows="3" class="form-control" th:field="*{itemDescription}" />
         <span th:errors="*{itemDescription}" class="alert-danger"></span>
     </div>
     <div class="form-group">
@@ -31,7 +31,7 @@
     </div>
     <div class="form-group">
         <label th:for="itemNotes">Notes</label>
-        <input class="form-control" th:field="*{itemNotes}" />
+        <textarea rows="3" class="form-control" th:field="*{itemNotes}" />
         <span th:errors="*{itemNotes}" class="alert-danger"></span>
     </div>
 
@@ -64,10 +64,6 @@
 <!--<input class="form-control" type="password" th:field="${agentPin}" />-->
 <!--<span th:errors="${agentPin}" class="error"></span>-->
 <!--</div>-->
-
-
-
-
 
 
 <a onclick="goBack()">Go Back</a>

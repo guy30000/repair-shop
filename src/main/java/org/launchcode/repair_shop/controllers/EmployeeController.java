@@ -25,15 +25,15 @@ public class EmployeeController {
         return "repair_shop/staff/index";
     }
 
-///////////////////Creat new
-    @RequestMapping(value = "ect", method = RequestMethod.GET)
+///////////////////Create new
+    @RequestMapping(value = "ect", method = RequestMethod.GET) //Create employee (view)
     private String displayECT (Model model) {
         model.addAttribute("title", "Employee Creation Tool");
         model.addAttribute(new Employee());
         model.addAttribute("buttonName", "Create new employee");
         return "repair_shop/staff/ect";
     }
-    @RequestMapping(value = "ect", method = RequestMethod.POST)
+    @RequestMapping(value = "ect", method = RequestMethod.POST) //Create employee (process)
     private String processECT (Model model, @Valid Employee employee, Errors errors, @RequestParam String verifyPin) {
 
         if (errors.hasErrors() || !verifyPin.equals(employee.getPin())){
@@ -46,7 +46,7 @@ public class EmployeeController {
             return "repair_shop/staff/ect";
         }
         employeeDao.save(employee);
-        return "repair_shop/staff/index";
+        return "redirect:/repair_shop/staff/view/" + employee.getId();
     }
 
 ///////////////////view edit
@@ -88,10 +88,4 @@ public class EmployeeController {
         employeeDao.save(employee);
         return "redirect:/repair_shop/staff/view";
     }
-
-//    Emplaye creation page x
-//      Emplayee edit       x
-//    emplayee time clock
-//    Emplayy pin to see who is had done what on tickets
-    //Empleyee time card reports
 }

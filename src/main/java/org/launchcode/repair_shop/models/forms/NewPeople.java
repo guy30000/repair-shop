@@ -24,7 +24,7 @@ public class NewPeople {
     private String lastName;
 
 
-    @Size(min=1, max=1, message = "Enter single letter")
+    @Size(min=0, max=1, message = "Enter single letter")
     private String middleInitial;
 
     @Email

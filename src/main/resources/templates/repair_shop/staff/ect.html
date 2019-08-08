@@ -8,6 +8,8 @@
 
 
 
+<h1 th:if="${employee.id}" class="alert-danger" style="max-width:600px;" th:text="'ID: ' + ${employee.id}"></h1>
+
 <form method="post" style="max-width:600px;" th:object="${employee}" id="employeeForm">
 <div>
     <div class="form-group" style="float:left; width:250px;">

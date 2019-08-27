@@ -119,13 +119,14 @@ p.groove {border-style: groove;}
 /*table hover lighting  */
 tr:hover {background-color:#f5f5f5;}
 
-
+/*  disabled due to it shortning lable on search pages. Not sure why it was added
 label{
 display:inline-block;
 width:200px;
 margin-right:30px;
 text-align:right;
 }
+*/
 
 input{
 

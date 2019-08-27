@@ -162,11 +162,11 @@ public class TicketController {
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)  //-display/process ticket note
     public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote,
                                               @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx,
-                                              @RequestParam(required = false) int agentId, @RequestParam(required = false) String agentPin){
+                                              @RequestParam Integer agentId, @RequestParam String agentPin){
         Employee agent;  //verify agent & pin//
         try {
             agent = employeeDao.findOne(agentId);
-            if (agent == null){
+            if (agent == null || agentId == null){
                 throw new RuntimeException();
             }
         } catch (RuntimeException e) {

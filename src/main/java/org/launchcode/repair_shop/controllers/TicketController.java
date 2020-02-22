@@ -154,7 +154,7 @@ public class TicketController {
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.GET) //-display/add note to single ticket
     public String displaySingleTicket (Model model, @PathVariable int ticketId){
         Ticket order = ticketDao.findOne(ticketId);
-        model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getLastName() + " - " + order.getItemName());
+        model.addAttribute("title", "Ticket: #" + order.getId() + " - " + order.getCustomer().getLastName() + ", " + order.getCustomer().getFirstName() + " - " + order.getItemName());
         model.addAttribute("ticket", order);
         return "repair_shop/ticket/order";
     }

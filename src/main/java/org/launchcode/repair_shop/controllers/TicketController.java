@@ -162,7 +162,7 @@ public class TicketController {
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.POST)  //-display/process ticket note
     public String processSingleTicketNewNote (Model model, @PathVariable int ticketId, @RequestParam(required = false) String newNote,
                                               @RequestParam(required = false) String closeticket, @RequestParam(required = false) String contactCx,
-                                              @RequestParam Integer agentId, @RequestParam String agentPin){
+                                              @RequestParam(required = false) String deleteTicket, @RequestParam Integer agentId, @RequestParam String agentPin){
         Employee agent;  //verify agent & pin//
         try {
             agent = employeeDao.findOne(agentId);
@@ -206,6 +206,11 @@ public class TicketController {
             order.setUpdated(timestamp);
         }
         ticketDao.save(order);
+        if (deleteTicket != null) {       ///Delet ticket
+            ticketDao.delete(ticketId);
+            return "redirect:/repair_shop/ticket";
+        }   ///Delete ticket to this test.
+
         return "repair_shop/ticket/order";
     }
 
